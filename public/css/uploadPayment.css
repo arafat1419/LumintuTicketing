@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
+
+body{
+    font-family: 'Montserrat', sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: #F8F9FA ;
+}
+
+.header {
+    border-bottom: 1px solid #D4AF37;
+}
+
+.isi {
+    border: 5px solid #fff;
+}
+
+.container-parent{
+    background-color: #38435F;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title-status{
+    color: #D4AF37;
+    font-weight: 700;
+}
+
+.btn-checkout, .btn-hapus{
+    background-color: #D4AF37 ;
+    color: #38435F;
+    font-weight: 500;
+}
+
+.status{
+    color: #D4AF37;
+    font-weight: 600;
+}
+
+/* Drag & Drop Area */
+.drag-area{
+    border: 5px dashed black;
+    background-color: white;
+    width: 100%;
+    height: 40vh;
+}
+
+.container-petunjuk{
+    width: 100%;
+}
+
+.drag-area.active{
+    border: 5px solid black;
+}
+
+.drag-area .icon{
+    font-size: 50px;
+}
+.drag-area header {
+    font-weight: 500;
+}
+
+.drag-area img{
+    width: 100%;
+    height: 100%;
+}
+
+.drag-area span {
+    font-weight: 500;
+    margin: 10px 0 15px 0;
+}

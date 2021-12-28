@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
+
+body{
+    font-family: 'Montserrat', sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: #F8F9FA ;
+}
+
+@media screen and (max-width: 767.98px) { 
+    .banner{
+        height: 50vh;
+        background-image: url('../img/banner.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+
+    .item{
+        height: 40vh;
+        width: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+
+} 
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .banner{
+        height: 50vh;
+        background-image: url('../img/banner.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+
+    .item{
+        height: 20vh;
+        width: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .banner{
+        height: 80vh;
+        background-image: url('../img/banner.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+
+    .item{
+        height: 25vh;
+        width: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .banner{
+        height: 80vh;
+        background-image: url('../img/banner.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+
+    .item{
+        height: 28vh;
+        width: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+}
+
+.nama-event{
+    color: #D4AF37;
+    font-weight: 700;
+}
+
+.tanggal{
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.btn-checkout {
+    border: none; 
+    background-color: #D4AF37;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: #38435F;
+}
+
+.btn-checkout[disabled] {
+    border: none; 
+    background-color: #6F778A;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: #fff;
+}
+
+
+
+.container-bannner-text{
+    color: white;
+}
+
+.container-banner-text .h1{
+    font-weight: 700;
+    color: white;
+    -webkit-text-stroke: 1px #000000;
+}
+
+.container-banner-text .h4{
+    font-weight: 700;
+    color: white;
+}
+
+.container-nav{
+    background-color: #38435F;
+    border-radius: 20px;
+    margin-top: -30px;
+}
+
+.btn-more {
+    background-color: #D4AF37;
+}
+
+
+
+
+.owl-carousel .owl-stage{
+	display: flex;
+}
+.owl-item {
+	display: flex;
+	flex: 1 0 auto;
+}
+
+.checkout {
+    border: 0px; 
+    background-color: #D4AF37;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: #38435F;
+}
+
+.input-status{
+    border: none;
+}
+

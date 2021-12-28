@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
+
+.iti { width: 100%; }
+.iti__country-list {
+    width: 350px;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.container-invitation{
+    height: 100vh;
+    margin: 0 auto;
+    background-color: #38435f;
+}
+
+.title-status{
+    color: #D4AF37;
+    font-weight: 700;
+}
+
+.footer-accept{
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    left: 0;
+}
+
+.btn-accept{
+    background-color: #D4AF37;
+}
