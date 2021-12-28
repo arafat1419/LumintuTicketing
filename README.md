@@ -1,6 +1,7 @@
 ﻿# LumintuTicketing
 LUMINTU GAMING
-Arafat ganteng
-Asa imute
-Ari Cukayno
-Arnoud Pejuang Cinta
+
+<br>- Arafat ganteng
+<br>- Asa imute
+<br>- Ari Cukayno
+<br>- Arnoud Pejuang Cinta
