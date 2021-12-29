@@ -44,10 +44,47 @@
     <!-- CSS Independent -->
     <link rel="stylesheet" href="../public/css/invitation.css">
 
+    <!-- Jquery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+
+    <!-- SweetAlert2 CDN -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        let showPopUp = () => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Invitation Successfull',
+                showConfirmButton: true,
+                confirmButtonColor: '#3085d6',
+                text: "Wait for next information from someone that invite you",
+            })
+        }
+    </script>
+
     <title>Invitation | Lumintu Event</title>
 </head>
 
 <body>
+    <?php
+    if (isset($_GET['allScs'])){
+
+        // header('Location: ../view/invitation.php?allScs');
+        header('Location: ../view/afterInvitation.php');
+        echo '<script type="text/javascript">
+                showPopUp();
+
+                $("#email").val("");
+                $("#customerName").val("");
+            </script>';
+    }
+    ?>
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-4 col-md-8 col-sm-12 col-xs-12 container-invitation p-5">
@@ -62,7 +99,7 @@
                         <div class="form-group email-form">
                             <label for="email" class="text-white">Email</label>
                             <input readonly type="email" name="email" class="form-control" id="email"
-                                   placeholder="example : ex@gmail.com" value="<?php echo $myEmail; ?>">
+                                   placeholder="exampxle : ex@gmail.com" value="<?php echo $myEmail; ?>">
                             <small id="emailHelpBlock" class="form-text text-danger d-none">
                                 Your email is not valid!
                             </small>
