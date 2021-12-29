@@ -79,7 +79,7 @@
             $mailLocation = '../view/email/emailConfirmation.html';
             $message = file_get_contents($mailLocation);
             $message = str_replace('%name%', $resultID['data'][0]['customer_name'], $message);
-            $message = str_replace('%link%', $buyTicketLink, $message);
+            $message = str_replace('%link%', $buyTicketLink . '?m=' . $cred, $message);
 
             $mail->msgHTML($message);
 
