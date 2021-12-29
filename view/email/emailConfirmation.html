@@ -29,13 +29,17 @@
         }
 
         .btnVerif {
-            width: 100%;
+            margin: 0 auto;
+            display: block;
+            width: 50%;
             padding: 12px;
-            margin: 10px 0;
             border: none;
             background-color: #D4AF37;
             color: #38435F;
             font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
         }
 
         .btnVerif:hover {
@@ -49,9 +53,11 @@
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center center;
-            margin: 10px 0;
+            margin: 10px 0; 
+        }
 
-            
+        .buttonDiv{
+            text-align: center;
         }
     </style>
 </head>
@@ -80,7 +86,7 @@
                                             Confirmation Email</h2>
                                         <p
                                             style="margin:0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">
-                                            Hi Arafat One step closers!, <br>  Your invitation has accepted by all your friends in this Event :
+                                            Hi %name% One step closers!, <br>  Your invitation has accepted by all your friends in this Event :
                                         </p>
                                         <div class="imgEvent" alt="">
                                             <div style="vertical-align: bottom;">
@@ -92,7 +98,7 @@
                                             style="font-size:16px;line-height:24px;font-family:Arial,sans-serif; margin: 0px;">
                                             To choose ticket, click this button below.</p>
                                         <!-- <p style="margin:0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;"><a href="http://www.example.com" style="color:#ee4c50;text-decoration:underline;">In tempus felis blandit</a></p> -->
-                                        <button class="btnVerif">Choose Ticket</button>
+                                        <div class="buttonDiv" ><a class="btnVerif"href="%link%">Choose Ticket</a></div>
                                     </td>
                                 </tr>
                             </table>
