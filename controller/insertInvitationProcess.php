@@ -73,8 +73,15 @@
             $mail->addAddress($inviterEmail);
             $mail->Subject = "[Lumintu Events] Link Pemesanan Tiket";
             $mail->isHTML(true);
-            $mail->Body = 'Hai ' . $resultID['data'][0]['customer_name'] . ', silahkan klik link berikut untuk melakukan pemesanan tiket<br/><br/>
-                            <a href="' . $buyTicketLink . '?m=' . $resultID['data'][0]['customer_code'] . '">Pesan Tiket</a>';
+            // $mail->Body = 'Hai ' . $resultID['data'][0]['customer_name'] . ', silahkan klik link berikut untuk melakukan pemesanan tiket<br/><br/>
+            //                 <a href="' . $buyTicketLink . '?m=' . $resultID['data'][0]['customer_code'] . '">Pesan Tiket</a>';
+
+            $mailLocation = '../view/email/emailConfirmation.html';
+            $message = file_get_contents($mailLocation);
+            $message = str_replace('%name%', $resultID['data'][0]['customer_name'], $message);
+            $message = str_replace('%link%', $buyTicketLink, $message);
+
+            $mail->msgHTML($message);
 
             if ($mail->send()) {
                 header('Location: ../view/details.php?scs');
