@@ -1,4 +1,4 @@
-let ip = '192.168.18.67:8001';
+let ip = 'arisukarno.xyz:8055';
 
 $(document).ready(function () {
   $.ajax({

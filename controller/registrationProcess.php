@@ -11,7 +11,7 @@
 
     include('../config.php');
 
-    $customerURL = 'http://192.168.18.67:8001/items/customer';
+    $customerURL = 'http://arisukarno.xyz:8055/items/customer';
 
     $name = $_POST['name'];
     $email = $_POST['email'];

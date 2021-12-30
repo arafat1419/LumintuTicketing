@@ -1,12 +1,14 @@
 <?php
-    $host = "192.168.18.11";
-    $user = "pintar_dev";
-    $pass = "pintar123";
-    $name = "lumintu-ticket";
+    $host = "arisukarno.xyz";
+    $user = "root";
+    $pass = "Lumintu-ticket2021";
+    $name = "lumintu_ticket_merge";
 
     $conn = mysqli_connect($host, $user, $pass, $name);
 
     if (mysqli_connect_errno()){
         echo "Failed to connect to DB. " . mysqli_connect_error();
+    } else {
+        echo "Success connect to DB";
     }
 ?>

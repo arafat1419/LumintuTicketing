@@ -1,4 +1,4 @@
-const IP = '192.168.18.67:8001';
+const IP = 'arisukarno.xyz:8055';
 const CAROUSEL = $('.owl-carousel');
 const TABLE = $('.table');
 const BUTTON_PLUS = $('.btn-plus');
