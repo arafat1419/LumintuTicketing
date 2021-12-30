@@ -2,7 +2,7 @@ let optionTicket = [{ nama: 'No Selected Ticket', harga: 0, capacity: 0 }]; //Ar
 let sumTicket = [0]; // Array Jumlah Data Penjualan per Ticket
 let statusPemesanan = []; // Array Status Invitation
 let pembelian = []; // Array menampung harga tiket pilihan
-let ip = '192.168.18.67:8001'; // IP API
+let ip = 'arisukarno.xyz:8055'; // IP API
 
 // AJAX untuk mengambil Jumlah Data Penjualan per Ticket
 $.ajax({

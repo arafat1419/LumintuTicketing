@@ -1,11 +1,11 @@
 <?php
     session_start();
 
-    include 'sendPaidCustomer.php';
+    // include 'sendPaidCustomer.php';
 
     $_SESSION['cred'] = $_GET['m'];
 
-    $customerURL = 'http://192.168.18.67:8001/items/customer';
+    $customerURL = 'http://arisukarno.xyz:8055/items/customer';
 
     $curl = curl_init();
 
@@ -40,10 +40,10 @@
         ));
 
         $responseInvID = curl_exec($curl);
-        $resultInvID = json_decode($responseInvID, true);
+        $resultInvID = json_decode($responseInvID, true);  
 
         if (!isset($postResponse['errors'][0]['extensions']['code'])){
-//            echo $postResponse['errors'][0]['extensions']['code'];
+        //    echo $postResponse['errors'][0]['extensions']['code'];
             header('Location: ../view/main.php?scs');
         }
     }else{
