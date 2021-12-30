@@ -26,7 +26,7 @@
     $customerEmail = $passEmail['customer_email'];
     $customerCode = $passEmail['customer_code'];
 
-    $loginLink = 'http://localhost/lumintu_logic/API/lumintuEventTicketing/controller/verificationProcess.php?m=' . $customerCode;
+    $loginLink = 'http://localhost/LumintuTicketing/controller/verificationProcess.php?m=' . $customerCode;
 
 
     if ($customerEmail == $email) {
