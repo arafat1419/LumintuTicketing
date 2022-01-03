@@ -1,6 +1,6 @@
 <?php
-    $customerURL = 'http://arisukarno.xyz:8055/items/customer';
-    $invitationURL = 'http://arisukarno.xyz:8055/items/invitation';
+    $customerURL = 'https://api-ticket.arisukarno.xyz/items/customer';
+    $invitationURL = 'https://api-ticket.arisukarno.xyz/items/invitation';
 
     if (isset($_GET['invm'])){
         $myEmail = base64_decode($_GET['invm']);

@@ -17,11 +17,11 @@
 
     use Endroid\QrCode\QrCode;
 
-    $urlIP = 'arisukarno.xyz:8055';
+    $urlIP = 'api-ticket.arisukarno.xyz';
     $html2pdf = new Html2Pdf('P','A4','en', false, 'UTF-8', array(25,15,30,0));
 
-    $ticketDataURL ="http://arisukarno.xyz:8055/items/order?fields=invoice_id,customer_id.customer_id,customer_id.customer_name,customer_id.customer_email,ticket_id.ticket_type,ticket_id.ticket_x_day.day_id.day_date,ticket_id.event_id.event_name,ticket_id.event_id.event_address&filter[invoice_id][invoice_status]=1&filter[customer_id][customer_id]=2";
-    $qrCodeURL = 'http://arisukarno.xyz:8055/items/qrcode';
+    $ticketDataURL ="https://api-ticket.arisukarno.xyz/items/order?fields=invoice_id,customer_id.customer_id,customer_id.customer_name,customer_id.customer_email,ticket_id.ticket_type,ticket_id.ticket_x_day.day_id.day_date,ticket_id.event_id.event_name,ticket_id.event_id.event_address&filter[invoice_id][invoice_status]=1&filter[customer_id][customer_id]=2";
+    $qrCodeURL = 'https://api-ticket.arisukarno.xyz/items/qrcode';
 
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, $ticketDataURL);

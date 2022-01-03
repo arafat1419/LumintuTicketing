@@ -11,7 +11,7 @@
 
     include('../config.php');
 
-    $customerURL = 'http://arisukarno.xyz:8055/items/customer';
+    $customerURL = 'https://api-ticket.arisukarno.xyz/items/customer';
 
     $name = $_POST['name'];
     $email = $_POST['email'];

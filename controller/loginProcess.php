@@ -14,7 +14,7 @@
     $email = $_POST['email'];
     // $password = $_POST['password'];
 
-    $customerURL = 'http://arisukarno.xyz:8055/items/customer';
+    $customerURL = 'https://api-ticket.arisukarno.xyz/items/customer';
 
     $query = "SELECT `customer_email`, `customer_code`, `customer_name` FROM `customer` WHERE `customer_email` = '$email'";
 

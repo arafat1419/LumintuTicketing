@@ -25,7 +25,7 @@ $curl = curl_init();
 
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://register.ulin-app.xyz/v1/register",
+            CURLOPT_URL => "http://20.124.214.5:8055/items/registration",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -34,9 +34,9 @@ $curl = curl_init();
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
                 CURLOPT_POSTFIELDS =>'{
-                "id_participant": "1",
-                "id_seminar": "2",
-                "ticket_type" : "All Day"
+                "id_participant": "200",
+                "id_session": "201",
+                "ticket_type" : "Undangan"
             }',
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json'

@@ -2,10 +2,10 @@
     session_start();
     $cred = $_SESSION['cred'];
 
-    $urlIP = 'arisukarno.xyz:8055';
-    $invoiceURL = 'http://' . $urlIP . '/items/invoice';
-    $paymentURL = 'http://' . $urlIP . '/items/payment';
-    $fileURL = 'http://' . $urlIP . '/files';
+    $urlIP = 'api-ticket.arisukarno.xyz';
+    $invoiceURL = 'https://' . $urlIP . '/items/invoice';
+    $paymentURL = 'https://' . $urlIP . '/items/payment';
+    $fileURL = 'https://' . $urlIP . '/files';
 
     $curl = curl_init();
 

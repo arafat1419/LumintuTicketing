@@ -4,8 +4,8 @@
     $cred = $_SESSION['cred'];
     $buyTicketLink = 'http://localhost/LumintuTicketing/view/statuspesanan.php';
     $bioLink = 'http://localhost/LumintuTicketing/view/invitation.php';
-    $customerURL = 'http://arisukarno.xyz:8055/items/customer';
-    $invitationURL = 'http://arisukarno.xyz:8055/items/invitation';
+    $customerURL = 'https://api-ticket.arisukarno.xyz/items/customer';
+    $invitationURL = 'https://api-ticket.arisukarno.xyz/items/invitation';
 
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
