@@ -32,6 +32,7 @@
                 $curl = curl_init();
 
                 $fileLocation = realpath(__DIR__ . DIRECTORY_SEPARATOR . '..' . '/public/temporaryImg/' . $fileName);
+                echo $fileLocation . "\n";
 
                 // post to directus_file first before to payment
                 curl_setopt_array($curl, array(
@@ -51,12 +52,15 @@
 
                 $uploadPayment = curl_exec($curl);
                 $postResponse = json_decode($uploadPayment, true);
+                // echo var_export($postResponse);
 
                 curl_close($curl);
 
                 if (isset($postResponse['errors'][0]['extensions']['code'])) {
+                    // echo "error 1" . "\n";
                     echo $postResponse['errors'][0]['extensions']['code'];
                 }else{
+                    // echo "bisa 1" . "\n";
                     $curl = curl_init();
 
                     //      get fileID
@@ -93,6 +97,8 @@
 
                     $uploadPayment = curl_exec($curl);
                     $postResponse = json_decode($uploadPayment, true);
+
+                    // echo var_export($postResponse);
 
                     curl_close($curl);
 
