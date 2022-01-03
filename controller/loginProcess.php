@@ -26,7 +26,7 @@
     $customerEmail = $passEmail['customer_email'];
     $customerCode = $passEmail['customer_code'];
 
-    $loginLink = 'http://localhost/lumintu_logic/API/lumintuEventTicketing/controller/verificationProcess.php?m=' . $customerCode;
+    $loginLink = 'http://localhost/LumintuTicketing/controller/verificationProcess.php?m=' . $customerCode;
 
 
     if ($customerEmail == $email) {
@@ -45,15 +45,15 @@
         $mail->Subject = "[Lumintu Events] Login Email";
         $mail->isHTML(true);
 
-        $mail->Body = 'Hai ' . $customerName . ', silahkan klik link berikut untuk login kembali menggunakan email anda. Link ini juga digunakan untuk akses landing page<br/><br/>
-                       <a href="' . $loginLink . '">Verifikasi Email</a>';
+        // $mail->Body = 'Hai ' . $customerName . ', silahkan klik link berikut untuk login kembali menggunakan email anda. Link ini juga digunakan untuk akses landing page<br/><br/>
+        //                <a href="' . $loginLink . '">Verifikasi Email</a>';
 
-        // $mailLocation = '../view/email/emailVerification.html';
-        // $message = file_get_contents($mailLocation);
-        // $message = str_replace('%name%', $name, $message);
-        // $message = str_replace('%link%', $loginLink, $message);
+        $mailLocation = '../view/email/emailLogin.html';
+        $message = file_get_contents($mailLocation);
+        $message = str_replace('%name%', $customerName, $message);
+        $message = str_replace('%link%', $loginLink, $message);
 
-        // $mail->msgHTML($message);
+        $mail->msgHTML($message);
 
         if ($mail->send()){
             header('Location: ../view/login.php?scs');

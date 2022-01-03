@@ -2,7 +2,7 @@
     session_start();
     $_SESSION['cred'] = $_GET['m'];
 
-    echo $_SESSION['cred'];
+    // echo $_SESSION['cred'];
 ?>
 <!DOCTYPE html>
 <html lang="en">

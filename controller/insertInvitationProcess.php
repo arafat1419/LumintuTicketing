@@ -2,8 +2,8 @@
 
     session_start();
     $cred = $_SESSION['cred'];
-    $buyTicketLink = 'http://localhost/lumintu_logic/API/lumintuEventTicketing/view/statuspesanan.php';
-    $bioLink = 'http://localhost/lumintu_logic/API/lumintuEventTicketing/view/invitation.php';
+    $buyTicketLink = 'http://localhost/LumintuTicketing/view/statuspesanan.php';
+    $bioLink = 'http://localhost/LumintuTicketing/view/invitation.php';
     $customerURL = 'http://arisukarno.xyz:8055/items/customer';
     $invitationURL = 'http://arisukarno.xyz:8055/items/invitation';
 
