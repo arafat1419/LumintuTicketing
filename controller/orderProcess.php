@@ -13,6 +13,8 @@
 
     require_once '../vendor/dompdf/dompdf/src/Autoloader.php';
 
+    $uploadPaymentLink = 'http://localhost/LumintuTicketing/view/uploadPayment.php';
+
     $urlIP = 'arisukarno.xyz:8055';
 
     $imagedata = file_get_contents("https://raw.githubusercontent.com/ifetayo14/lumintuEventTicketing/master/public/img/kraton.png");
@@ -945,6 +947,7 @@
         $mailLocation = '../view/email/emailInvoice.html';
         $message = file_get_contents($mailLocation);
         $message = str_replace('%name%', $resultID['data'][0]['customer_name'], $message);
+        $message = str_replace('%link%', $uploadPaymentLink . "?m=" . $_SESSION['cred'], $message);
 
         $mail->msgHTML($message);
         $mail->addAttachment('../public/pdfFile/Invoice-' . $customerID . '.pdf');

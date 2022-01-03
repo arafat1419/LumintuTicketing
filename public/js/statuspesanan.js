@@ -92,10 +92,12 @@ $(document).ready(function () {
       }
 
       $.ajax({
-        url: `http://${ip}/items/invitation?fields=invitation_id,customer_id.customer_email,customer_id.customer_name,customer_inviter_id.customer_email,invitation_status&filter[customer_inviter_id][customer_code]="${params}"`,
+        url: `http://${ip}/items/invitation?fields=invitation_id,customer_id.customer_email,customer_id.customer_name,customer_inviter_id.customer_email,invitation_status&filter[customer_inviter_id][customer_code]=${params}`,
         type: 'GET',
         dataType: 'json',
         success: function (data, textStatus, xhr) {
+
+          console.log("Data jalan");
           console.log(data.data.length);
 
           data.data.map((item, index) => {
