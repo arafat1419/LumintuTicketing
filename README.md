@@ -6,7 +6,7 @@ This API provides using [Directus](https://directus.io/) RESTfull API for ticket
 ### API ENDPOINT 
 #### API Format
 ```ruby
-https://api-ticket.{arisukarno.xyz/items/{collections}}?access_token={token}
+https://api-ticket.arisukarno.xyz/items/{collections}}?access_token={token}
 ```
 #### List Collections
 * customer
