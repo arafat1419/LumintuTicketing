@@ -15,17 +15,17 @@
 
     $uploadPaymentLink = 'http://localhost/LumintuTicketing/view/uploadPayment.php';
 
-    $urlIP = 'arisukarno.xyz:8055';
+    $urlIP = 'api-ticket.arisukarno.xyz';
 
     $imagedata = file_get_contents("https://raw.githubusercontent.com/ifetayo14/lumintuEventTicketing/master/public/img/kraton.png");
     // alternatively specify an URL, if PHP settings allow
     $base64 = base64_encode($imagedata);
 
-    $url = 'http://' . $urlIP . '/items/invitation?fields=invitation_id,customer_id.customer_id,customer_id.customer_email,customer_id.customer_name,customer_inviter_id.customer_email,invitation_status&filter[customer_inviter_id][customer_code]=' . $_SESSION['cred'];
-    $invoiceURL = 'http://' . $urlIP . '/items/invoice';
-    $customerURL = 'http://' . $urlIP . '/items/customer';
-    $orderURL = 'http://' . $urlIP . '/items/order';
-    $voucherURL = 'http://' . $urlIP . '/items/voucher';
+    $url = 'https://' . $urlIP . '/items/invitation?fields=invitation_id,customer_id.customer_id,customer_id.customer_email,customer_id.customer_name,customer_inviter_id.customer_email,invitation_status&filter[customer_inviter_id][customer_code]=' . $_SESSION['cred'];
+    $invoiceURL = 'https://' . $urlIP . '/items/invoice';
+    $customerURL = 'https://' . $urlIP . '/items/customer';
+    $orderURL = 'https://' . $urlIP . '/items/order';
+    $voucherURL = 'https://' . $urlIP . '/items/voucher';
 
     $document = new DOMPDF('P', 'A4', 'en', false, 'UTF-8');
 
@@ -57,6 +57,7 @@
     if (sizeof($invitationDataLength) == 1){
         if ($_POST['voucher'] != ''){
             $voucher = $_POST['voucher'];
+            echo $voucher;
             //      get voucher
             curl_setopt($curl, CURLOPT_URL, $voucherURL . '?&filter[voucher_code]=' . $voucher);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -79,6 +80,29 @@
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS =>'{
+                "customer_id": "' . $customerID . '",
+                "invoice_total": "' . $totalPrice . '",
+                "invoice_status": 0
+            }',
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json'
+                ),
+            ));
+
+            curl_close($curl);
+            $curl = curl_init();
+
+            //post to ticket
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => $voucherURL,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'UPDATE',
                 CURLOPT_POSTFIELDS =>'{
                 "customer_id": "' . $customerID . '",
                 "invoice_total": "' . $totalPrice . '",

@@ -3,7 +3,7 @@
     session_start();
     $cred = $_SESSION['cred'];
 
-    $customerURL = 'http://arisukarno.xyz:8055/items/customer';
+    $customerURL = 'https://api-ticket.arisukarno.xyz/items/customer';
 
     $curl = curl_init();
 

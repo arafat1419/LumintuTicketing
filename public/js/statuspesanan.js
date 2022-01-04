@@ -2,11 +2,83 @@ let optionTicket = [{ nama: 'No Selected Ticket', harga: 0, capacity: 0 }]; //Ar
 let sumTicket = [0]; // Array Jumlah Data Penjualan per Ticket
 let statusPemesanan = []; // Array Status Invitation
 let pembelian = []; // Array menampung harga tiket pilihan
-let ip = 'arisukarno.xyz:8055'; // IP API
+let ip = 'api-ticket.arisukarno.xyz'; // IP API
+
+
+$(`#useVoucher`).click(() => {
+  const voucherCode = $(`#voucherCode`).val();
+
+  $.ajax({
+    url: `https://${ip}/items/voucher`,
+    type: 'GET',
+    dataType : 'json',
+    success: function (data, textStatus, xhr) {
+      data.data.map((item) => {
+        if(item.voucher_code == voucherCode) {
+          alert(`Use Voucher : ${voucherCode}`);
+          // http://api-ticket.arisukarno.xyz:8055/items/ticket_x_voucher?fields=voucher_id.*,ticket_id.ticket_type,ticket_id.ticket_price&filter[voucher_id.voucher_id]=1
+            $.ajax({
+              url: `http://api-ticket.arisukarno.xyz:8055/items/ticket_x_voucher?fields=voucher_id.*,ticket_id.ticket_type,ticket_id.ticket_price,ticket_id.ticket_seat&filter[voucher_id.voucher_id]=${item.voucher_id}`,
+              type: 'GET',
+              dataType : 'json',
+              success: function (data, textStatus, xhr) {
+                // optionTicket=[];
+                optionTicket = [{ nama: 'No Selected Ticket', harga: 0, capacity: 0 }];
+                data.data.map((item) => {
+                  console.log(item.ticket_id.ticket_type);
+                  optionTicket.push({
+                          nama: item.ticket_id.ticket_type,
+                          harga: item.ticket_id.ticket_price,
+                          capacity: item.ticket_id.ticket_seat,
+                        });
+                })
+                $('.custom-select').find('option')
+                .remove()
+                .end();
+                optionTicket.map((item, index) => {
+                  if (optionTicket[index].capacity != null) {
+                    if (optionTicket[index].capacity == 0) {
+                      $('.custom-select').append(`<option value="${index}">${item.nama}</option>`);
+                    } else {
+                      $('.custom-select').append(`<option value="${index}">${item.nama} (${item.capacity - sumTicket[index]})</option>`);
+                    }
+                  }
+                });
+              },
+              error: function (xhr, textStatus, errorThrown) {
+                console.log('Error in Database');
+              }
+            })
+        } else {
+          
+        }
+      })
+    },
+    error: function (xhr, textStatus, errorThrown) {
+      console.log('Error in Database');
+    }
+  })
+  
+});
+
+// $.ajax({
+//   url: `https://${ip}/items/voucher`,
+//   type: 'GET',
+//   dataType : 'json',
+//   success: function (data, textStatus, xhr) {
+//     console.log("Voucher" + data);
+//     data.data.map((item) => {
+//       console.log(optionTicket)
+//     })
+//   },
+//   error: function (xhr, textStatus, errorThrown) {
+//     console.log('Error in Database');
+//   }
+// })
 
 // AJAX untuk mengambil Jumlah Data Penjualan per Ticket
 $.ajax({
-  url: `http://${ip}/items/order?aggregate[sum]=order_quantity&groupBy[]=ticket_id`,
+  url: `https://${ip}/items/order?aggregate[sum]=order_quantity&groupBy[]=ticket_id`,
   type: 'GET',
   dataType: 'json',
   success: function (data, textStatus, xhr) {
@@ -60,7 +132,7 @@ $(document).ready(function () {
 
   // AJAX jenis Tiket
   $.ajax({
-    url: `http://${ip}/items/ticket/`,
+    url: `https://${ip}/items/ticket/`,
     type: 'GET',
     dataType: 'json',
     success: function (data, textStatus, xhr) {
@@ -92,7 +164,7 @@ $(document).ready(function () {
       }
 
       $.ajax({
-        url: `http://${ip}/items/invitation?fields=invitation_id,customer_id.customer_email,customer_id.customer_name,customer_inviter_id.customer_email,invitation_status&filter[customer_inviter_id][customer_code]=${params}`,
+        url: `https://${ip}/items/invitation?fields=invitation_id,customer_id.customer_email,customer_id.customer_name,customer_inviter_id.customer_email,invitation_status&filter[customer_inviter_id][customer_code]=${params}`,
         type: 'GET',
         dataType: 'json',
         success: function (data, textStatus, xhr) {

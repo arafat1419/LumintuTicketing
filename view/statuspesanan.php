@@ -42,7 +42,8 @@
 
         <div class="container mb-3 d-none voucher text-right">
             <div class="d-flex justify-content-end">
-                <input type="text" name="voucher" class="form-control kode-input w-25" placeholder="Voucher Code" />
+                <input id="voucherCode" type="text" name="voucher" class="form-control kode-input w-25" placeholder="Voucher Code" />
+                <div style="margin-left: 10px;"><button id="useVoucher" type="button">Use</button></div>
             </div>
         </div>
 

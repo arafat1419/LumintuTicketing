@@ -1,8 +1,8 @@
-let ip = 'arisukarno.xyz:8055';
+let ip = 'api-ticket.arisukarno.xyz';
 
 $(document).ready(function () {
   $.ajax({
-    url: `http://${ip}/items/event`,
+    url: `https://${ip}/items/event`,
     type: 'GET',
     dataType: 'json',
     beforeSend: function () {
@@ -26,7 +26,7 @@ $(document).ready(function () {
             </div>
             `;
         $('.owl-carousel').append(eventItem);
-        $(`.item${item.event_id}`).css('background-image', `url("http://${ip}/assets/${item.event_image}")`);
+        $(`.item${item.event_id}`).css('background-image', `url("https://${ip}/assets/${item.event_image}")`);
         console.log(item.event_id);
       });
       $('.owl-carousel').owlCarousel({
