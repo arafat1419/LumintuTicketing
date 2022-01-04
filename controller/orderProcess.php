@@ -1,6 +1,7 @@
 <?php
     session_start();
 
+
     use PHPMailer\PHPMailer\PHPMailer;
     use Dompdf\Dompdf;
 
@@ -55,6 +56,7 @@
     $curl = curl_init();
 
     if (sizeof($invitationDataLength) == 1){
+        echo "Jalan line 58" . "\n";
         if ($_POST['voucher'] != ''){
             $voucher = $_POST['voucher'];
             echo $voucher;
@@ -65,7 +67,18 @@
             $resultVoucher = json_decode($responseVoucher, true);
             $voucherID = $resultVoucher['data'][0]['voucher_id'];
             $discPrice = $resultVoucher['data'][0]['voucher_discount'];
+            $voucherStok = $resultVoucher['data'][0]['voucher_stock'];
+            $voucherReal = (int)$voucherStok - 1;
+
+            echo "\n" . $voucherStok . "\n" ;
+
+            echo $discPrice . "\n";
+            echo $price . "\n";
+
             $totalPrice = (int)$price - (int)$discPrice;
+
+            echo $totalPrice . "\n";
+
 
             curl_close($curl);
             $curl = curl_init();
@@ -90,28 +103,30 @@
                 ),
             ));
 
+            $responseA = curl_exec($curl);
+            $resultA = json_decode($responseA, true);  
+            echo "\n" . var_export($resultA) . "\n";
+
             curl_close($curl);
             $curl = curl_init();
 
-            //post to ticket
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => $voucherURL,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'UPDATE',
-                CURLOPT_POSTFIELDS =>'{
-                "customer_id": "' . $customerID . '",
-                "invoice_total": "' . $totalPrice . '",
-                "invoice_status": 0
-            }',
-                CURLOPT_HTTPHEADER => array(
-                    'Content-Type: application/json'
-                ),
-            ));
+            //post to voucher
+            // curl_setopt_array($curl, array(
+            //     CURLOPT_URL => $voucherURL . "/" . $voucherID,
+            //     CURLOPT_RETURNTRANSFER => true,
+            //     CURLOPT_ENCODING => '',
+            //     CURLOPT_MAXREDIRS => 10,
+            //     CURLOPT_TIMEOUT => 0,
+            //     CURLOPT_FOLLOWLOCATION => true,
+            //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            //     CURLOPT_CUSTOMREQUEST => 'PATCH',
+            //     CURLOPT_POSTFIELDS =>'{
+            //     "voucher_stock": ' . $voucherReal . '
+            // }',
+            //     CURLOPT_HTTPHEADER => array(
+            //         'Content-Type: application/json'
+            //     ),
+            // ));
         }else{
             $voucherID = '0';
             $curl = curl_init();
@@ -529,7 +544,7 @@
             CURLOPT_POSTFIELDS => '{
                 "customer_id": "' . $customerID . '",
                 "invoice_total": "' . $price . '",
-                "invoice_status": "0"
+                "invoice_status": 0
             }',
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json'
@@ -741,7 +756,7 @@
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $orderURL . '?fields=customer_id.customer_name,ticket_id.ticket_type,ticket_id.ticket_price,invoice_id.invoice_total&filter%5Binvoice_id%5D%5Bcustomer_id%5D=' . $customerID,
+            CURLOPT_URL => $orderURL . '?fields=customer_id.customer_name,ticket_id.ticket_type,ticket_id.ticket_price,invoice_id.invoice_total,voucher_id.voucher_discount&filter%5Binvoice_id%5D%5Bcustomer_id%5D=' . $customerID,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -869,6 +884,13 @@
                                                         </tr>
                         ';
         }
+        $output .= '
+                                                        <tr>
+                                                            <td class="leftSide"><b>Discount </b></td>
+                                                            <td></td>
+                                                            <td class="rightSide">-' . $result["data"][0]["voucher_id"]["voucher_discount"] . '</td>
+                                                        </tr>
+                        ';
 
         $output .= '
                                                         <tr>

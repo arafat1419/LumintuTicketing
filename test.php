@@ -23,21 +23,26 @@ $curl = curl_init();
         //     ),
         // ));
 
+        $voucherURL = "https://api-ticket.arisukarno.xyz/items/voucher";
+        $voucherID = 1;
+        $voucherStok = '71';
+        $voucherReal = (int)$voucherStok - 1;
+
+        echo $voucherReal;
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "http://20.124.214.5:8055/items/registration",
+            CURLOPT_URL => $voucherURL . "/" . $voucherID,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_TIMEOUT => 0,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS =>'{
-                "id_participant": "200",
-                "id_session": "201",
-                "ticket_type" : "Undangan"
-            }',
+            CURLOPT_CUSTOMREQUEST => 'PATCH',
+            CURLOPT_POSTFIELDS =>'{
+            "voucher_stock": ' . $voucherReal . '
+        }',
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json'
             ),
