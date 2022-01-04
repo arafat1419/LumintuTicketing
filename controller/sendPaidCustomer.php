@@ -38,7 +38,7 @@
 
             $response = curl_exec($curl);
             $result = json_decode($response, true);
-            echo var_export($result);
+            echo var_export($result) . "\n";
 
 
             if (isset($result['errors'][0]['extensions']['code'])){
@@ -46,7 +46,7 @@
             }
             else{
                 echo 'scs';
-                echo var_export($result);
+                echo var_export($result) . "\n";
             }
 
             curl_close($curl);
@@ -73,7 +73,7 @@
 
             $response = curl_exec($curl);
             $result = json_decode($response, true);
-            echo var_export($result);
+            echo var_export($result) . "\n";
 
 
             if (isset($result['errors'][0]['extensions']['code'])){
@@ -81,7 +81,7 @@
             }
             else{
                 echo 'scs';
-                echo var_export($result);
+                echo var_export($result) . "\n";
             }
 
             curl_close($curl);

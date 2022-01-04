@@ -57,6 +57,7 @@
     if (sizeof($invitationDataLength) == 1){
         if ($_POST['voucher'] != ''){
             $voucher = $_POST['voucher'];
+            echo $voucher;
             //      get voucher
             curl_setopt($curl, CURLOPT_URL, $voucherURL . '?&filter[voucher_code]=' . $voucher);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);

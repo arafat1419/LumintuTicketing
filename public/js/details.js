@@ -10,7 +10,7 @@ const ID_EVENT = 2;
 $(document).ready(() => {
   // Mengambil Jadwal Hari di sebuah event
   $.ajax({
-    url: `https://${ip}/items/day`,
+    url: `https://${IP}/items/day`,
     type: 'GET',
     dataType: 'json',
     success: (data, textStatus, xhr) => {
@@ -54,7 +54,7 @@ $(document).ready(() => {
 
   // Mengambil Informasi sebuah event
   $.ajax({
-    url: `https://${ip}/items/event/${ID_EVENT}`,
+    url: `https://${IP}/items/event/${ID_EVENT}`,
     type: 'GET',
     dataType: 'json',
     beforeSend: () => {
@@ -79,7 +79,7 @@ $(document).ready(() => {
 // Mengambil Semua Informasi Session
 let sesi = () => {
   $.ajax({
-    url: `https://${ip}/items/ticket?fields=ticket_id,ticket_type,ticket_x_session.session_id.*,ticket_x_day.day_id.*`,
+    url: `https://${IP}/items/ticket?fields=ticket_id,ticket_type,ticket_x_session.session_id.*,ticket_x_day.day_id.*`,
     type: 'GET',
     dataType: 'json',
     beforeSend: () => {
