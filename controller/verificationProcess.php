@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    include 'sendPaidCustomer.php';
+    // include 'sendPaidCustomer.php';
 
     $_SESSION['cred'] = $_GET['m'];
 

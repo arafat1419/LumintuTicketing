@@ -95,6 +95,35 @@
                         ),
                     ));
 
+
+                    $uploadPayment = curl_exec($curl);
+                    $postResponse = json_decode($uploadPayment, true);
+
+                    // echo var_export($postResponse);
+
+                    curl_close($curl);
+
+                    $curl = curl_init();
+
+                    //post to payment
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => $invoiceURL . "/" . $invoiceID,
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => '',
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => 'PATCH',
+                        CURLOPT_POSTFIELDS =>'{
+                            "invoice_status": 1
+                        }',
+                        CURLOPT_HTTPHEADER => array(
+                            'Content-Type: application/json'
+                        ),
+                    ));
+
+
                     $uploadPayment = curl_exec($curl);
                     $postResponse = json_decode($uploadPayment, true);
 
