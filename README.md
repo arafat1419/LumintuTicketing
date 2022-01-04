@@ -1,13 +1,16 @@
 ﻿# DOCUMENTATION REST API LUMINTU TICKETING 
 
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://documenter.getpostman.com/view/17097105/UVXbuKmw)
+
 ### DESCRIPTION
 This API provides using [Directus](https://directus.io/) RESTfull API for ticket booking web applications by Lumintu Events. See full documentaion in [RESTfull API Directus](https://docs.directus.io/reference/introduction/).
 
 ### API ENDPOINT 
 #### API Format
 ```ruby
-https://api-ticket.arisukarno.xyz/items/{collections}}?access_token={token}
+https://api-ticket.arisukarno.xyz/items/{collections}?access_token={token}
 ```
+
 #### List Collections
 * customer
 * order
