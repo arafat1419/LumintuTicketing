@@ -4,6 +4,8 @@ let statusPemesanan = []; // Array Status Invitation
 let pembelian = []; // Array menampung harga tiket pilihan
 let ip = 'api-ticket.arisukarno.xyz'; // IP API
 
+let voucherAvailable = false;
+
 
 $(`#useVoucher`).click(() => {
   const voucherCode = $(`#voucherCode`).val();
@@ -15,44 +17,78 @@ $(`#useVoucher`).click(() => {
     success: function (data, textStatus, xhr) {
       data.data.map((item) => {
         if(item.voucher_code == voucherCode) {
-          alert(`Use Voucher : ${voucherCode}`);
+          voucherAvailable = true;
           // http://api-ticket.arisukarno.xyz:8055/items/ticket_x_voucher?fields=voucher_id.*,ticket_id.ticket_type,ticket_id.ticket_price&filter[voucher_id.voucher_id]=1
+
             $.ajax({
-              url: `http://api-ticket.arisukarno.xyz:8055/items/ticket_x_voucher?fields=voucher_id.*,ticket_id.ticket_type,ticket_id.ticket_price,ticket_id.ticket_seat&filter[voucher_id.voucher_id]=${item.voucher_id}`,
+              url: `https://${ip}/items/order?fields=voucher_id.*,invoice_id.invoice_id,invoice_id.invoice_status&filter[voucher_id.voucher_id]=${item.voucher_id}`,
               type: 'GET',
               dataType : 'json',
               success: function (data, textStatus, xhr) {
-                // optionTicket=[];
-                optionTicket = [{ nama: 'No Selected Ticket', harga: 0, capacity: 0 }];
-                data.data.map((item) => {
-                  console.log(item.ticket_id.ticket_type);
-                  optionTicket.push({
-                          nama: item.ticket_id.ticket_type,
-                          harga: item.ticket_id.ticket_price,
-                          capacity: item.ticket_id.ticket_seat,
-                        });
-                })
-                $('.custom-select').find('option')
-                .remove()
-                .end();
-                optionTicket.map((item, index) => {
-                  if (optionTicket[index].capacity != null) {
-                    if (optionTicket[index].capacity == 0) {
-                      $('.custom-select').append(`<option value="${index}">${item.nama}</option>`);
-                    } else {
-                      $('.custom-select').append(`<option value="${index}">${item.nama} (${item.capacity - sumTicket[index]})</option>`);
+                let voucherStock = data.data[0].voucher_id.voucher_stock;
+                let invoiceExipired = 0;
+                let invoiceId = [];
+
+                data.data.map((item2) => {
+                  // console.log(item2.invoice_id);
+                  if(!(invoiceId.includes(item2.invoice_id.invoice_id))) {
+                    if(item2.invoice_id.invoice_status == 2) {
+                      invoiceExipired++;
                     }
+                    invoiceId.push(item2.invoice_id.invoice_id);
                   }
-                });
+                })
+
+                let stokVoucher = voucherStock - invoiceId.length + invoiceExipired;
+                console.log("Stok Voucher - " + stokVoucher);
+
+                if (stokVoucher > 0) {
+                  $.ajax({
+                    url: `http://api-ticket.arisukarno.xyz:8055/items/ticket_x_voucher?fields=voucher_id.*,ticket_id.ticket_type,ticket_id.ticket_price,ticket_id.ticket_seat&filter[voucher_id.voucher_id]=${item.voucher_id}`,
+                    type: 'GET',
+                    dataType : 'json',
+                    success: function (data, textStatus, xhr) {
+                      // optionTicket=[];
+                      optionTicket = [{ nama: 'No Selected Ticket', harga: 0, capacity: 0 }];
+                      data.data.map((item) => {
+                        console.log(item.ticket_id.ticket_type);
+                        optionTicket.push({
+                                nama: item.ticket_id.ticket_type,
+                                harga: item.ticket_id.ticket_price,
+                                capacity: item.ticket_id.ticket_seat,
+                              });
+                      })
+                      $('.custom-select').find('option')
+                      .remove()
+                      .end();
+                      optionTicket.map((item, index) => {
+                        if (optionTicket[index].capacity != null) {
+                          if (optionTicket[index].capacity == 0) {
+                            $('.custom-select').append(`<option value="${index}">${item.nama}</option>`);
+                          } else {
+                            $('.custom-select').append(`<option value="${index}">${item.nama} (${item.capacity - sumTicket[index]})</option>`);
+                          }
+                        }
+                      });
+                      alert(`Use Voucher : ${voucherCode}`);
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                      console.log('Error in Database');
+                    }
+                  })
+                } else {
+                  alert("Voucher telah habis");
+                }
               },
               error: function (xhr, textStatus, errorThrown) {
                 console.log('Error in Database');
               }
             })
-        } else {
-          
         }
       })
+      if(!voucherAvailable) {
+        alert("Kode Voucher salah");
+      }
     },
     error: function (xhr, textStatus, errorThrown) {
       console.log('Error in Database');
