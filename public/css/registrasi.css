@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
+
+.iti { width: 100%; }
+.iti__country-list {
+    width: 350px;
+}
+
+body{
+    font-family: 'Montserrat', sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: #F8F9FA ;
+}
+
+.sampingbody{
+    background-image: url('../img/SIDEBODY.png');
+    background-size:750px 900px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.registrasi-side{
+    background-color: #38435F;
+    height: 100vh;
+}
+
+
+.registrasi-side-header .h1, .registrasi-side-header .h2 {
+    font-weight: 700;
+}
+
+
+.btn-registrasi {
+    background-color: #6F778A;
+    color: #fff;
+    border: 1px solid #fff;
+}
+
+.btn-registrasi[disabled] {
+    border: none;
+    background-color: #6F778A;
+    color: #fff;
+}
+
+.registrasi-side-bottom{
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+}
+
+.gold{
+    color: #D4AF37;
+    font-weight: 600;
+}
+
+input:focus{
+    box-shadow: 1px 2px 18px -3px rgba(212,175,55,0.79) !important;
+    -webkit-box-shadow: 1px 2px 18px -3px rgba(212,175,55,0.79) !important;
+    -moz-box-shadow: 1px 2px 18px -3px rgba(212,175,55,0.79) !important;
+    outline: none !important;
+}

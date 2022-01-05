@@ -1,4 +1,4 @@
-const IP = 'api-ticket.arisukarno.xyz';
+const IP = 'arisukarno.xyz:8055';
 const CAROUSEL = $('.owl-carousel');
 const TABLE = $('.table');
 const BUTTON_PLUS = $('.btn-plus');
@@ -10,7 +10,7 @@ const ID_EVENT = 2;
 $(document).ready(() => {
   // Mengambil Jadwal Hari di sebuah event
   $.ajax({
-    url: `https://${IP}/items/day`,
+    url: `http://${IP}/items/day`,
     type: 'GET',
     dataType: 'json',
     success: (data, textStatus, xhr) => {
@@ -54,7 +54,7 @@ $(document).ready(() => {
 
   // Mengambil Informasi sebuah event
   $.ajax({
-    url: `https://${IP}/items/event/${ID_EVENT}`,
+    url: `http://${IP}/items/event/${ID_EVENT}`,
     type: 'GET',
     dataType: 'json',
     beforeSend: () => {
@@ -79,7 +79,7 @@ $(document).ready(() => {
 // Mengambil Semua Informasi Session
 let sesi = () => {
   $.ajax({
-    url: `https://${IP}/items/ticket?fields=ticket_id,ticket_type,ticket_x_session.session_id.*,ticket_x_day.day_id.*`,
+    url: `http://${IP}/items/ticket?fields=ticket_id,ticket_type,ticket_x_session.session_id.*,ticket_x_day.day_id.*`,
     type: 'GET',
     dataType: 'json',
     beforeSend: () => {
@@ -181,6 +181,18 @@ let addInputFieldInvitation = () => {
   $(`#peserta${quantity} .form-group input`).val('');
   validate(`peserta${quantity}`);
   $(`#peserta${quantity} #emailHelpBlock`).removeClass('d-none');
+};
+//Function untuk mengurangi field untuk mengisi email invitation
+let delInputFieldInvitation = () => {
+  let quantity = document.querySelectorAll('.peserta').length;
+  let elem = document.getElementById('peserta1');
+  let cln = elem.cloneNode(true);
+  cln.id = 'peserta' + quantity;
+  console.log(cln.id);
+  if(quantity > 1){
+  $(`#${cln.id}`).last().remove();
+  }
+  
 };
 
 // Function Validate Email dengan REGEX

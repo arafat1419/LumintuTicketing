@@ -9,8 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- CSS Independent -->
-    <link rel="stylesheet" href="../public/css/main.css">
-
+    <link rel="stylesheet" href="../public/css/login.css">
     <!-- Jquery CDN -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -60,10 +59,10 @@
 
     <div class="container-fluid">
         <div class="row d-flex">
-            <div class="col-lg-4 col-md-6 col-xs-12 login-side p-5"> <!-- Start Login Side -->
-                <div class="login-side-header mb-5">
+            <div class="col-lg-4 col-md-6 col-xs-12 p-5 login-side"> <!-- Start Login Side -->
+                <div class="login-side-header mt-5 mb-5">
                     <p class="h1 text-center mb-3">Welcome</p>
-                    <p class="font-italic text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
+                    <p class=" text-center">To the part of our masterpiece,our goal's to make your dream come true</p>
 
                     <?php
                     if (isset($_GET['success'])){
@@ -89,16 +88,16 @@
                         <small id="emailHelpBlock" class="form-text text-danger d-none">
                             Your email is not valid!
                         </small>
-                        <button type="submit" class="btn btn-lg btn-submit w-100 mt-2">Submit</button>
+                        <button type="submit" class="btn btn-login w-100 mt-2">SUBMIT</button>
                       </form>
                 </div>
 
                 <div class="login-side-bottom position-absolute mb-4">
-                    <p class="text-center">Don’t have an account? <a href="../view/registration/registration.php">Sign-Up</a></p>
+                    <p class="text-center">Don’t have an account? <a class ="textlink"href="../view/registration/registration.php">Sign-Up</a></p>
                 </div>
 
             </div> <!-- End Login Side -->
-            <div class="col-lg-8 col-md-6"></div>
+            <div class="sidebody col-lg-8 col-md-6"></div>
         </div>
     </div>
 

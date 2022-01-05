@@ -16,7 +16,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Independent CSS-->
-    <link rel="stylesheet" href="../../public/css/registration.css">
+    <link rel="stylesheet" href="../../public/css/registrasi.css">
 
     <title>Registration | Lumintu Event</title>
 
@@ -68,8 +68,9 @@
 ?>
 
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-8 col-md-6 col-sm-12 col-xs-12"></div> <!-- Col-8 -->
+        <div class="row d-flex">
+            <div class="sampingbody col-lg-8 col-md-6"></div>
+             <!-- Col-8 -->
             <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 p-5 registrasi-side">
                 <!-- Start Registration Side -->
                 <div class="registrasi-side-header mb-4">

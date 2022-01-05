@@ -14,7 +14,7 @@ body {
 
 @media screen and (max-width: 767.98px) { 
     .banner-event{
-        height: 90vh;
+        height: 100vh;
         background-image: url('../img/event1.jpg');
         background-size: cover;
         background-repeat: no-repeat;
@@ -30,6 +30,7 @@ body {
 
     .jumbotron {
         background: rgba(0,0,0,0.5);
+        width: 50%;
     }
 
     .btn-buy{
@@ -43,7 +44,7 @@ body {
 @media (min-width: 768px) and (max-width: 991.98px) {
     .banner-event{
         position: relative;
-        height: 50vh;
+        height: 70vh;
         background-image: url('../img/event1.jpg');
         background-size: cover;
         background-repeat: no-repeat;
@@ -72,7 +73,7 @@ body {
 @media (min-width: 992px) and (max-width: 1199.98px) {
     .banner-event{
         position: relative;
-        height: 80vh;
+        height: 90vh;
         background-image: url('../img/event1.jpg');
         background-size: cover;
         background-repeat: no-repeat;
@@ -101,7 +102,7 @@ body {
 @media screen and (min-width: 1200px) {
     .banner-event{
         position: relative;
-        height: 50vh;
+        height: 60vh;
         background-image: url('../img/event1.jpg');
         background-size: cover;
         background-repeat: no-repeat;
@@ -127,11 +128,11 @@ body {
     }
 }
 
-
-
-
-
-
+.container-nav{
+    background-color: #38435F;
+    border-radius: 20px;
+    position: relative;
+}
 
 .nama-event{
     color: #D4AF37;
