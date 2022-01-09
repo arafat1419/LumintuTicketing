@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
+
+body{
+    font-family: 'Montserrat', sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    
+    
+}
+
+.header {
+    border-bottom: 1px solid #D4AF37;
+}
+
+.isi {
+    border-radius: 20px;
+    background-color: #38435F;
+    background-image: url("../img/manuk.png");
+    background-repeat:no-repeat ;
+    background-position:center bottom;
+    background-size:90vh ;
+    padding: 15%;
+    width: 90vh;
+    height: 65vh;
+    
+}
+
+.container-parent{
+    
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('../img/manuk.jpg');
+    background-size:cover;
+    background-position: center;
+
+    
+}
+.title-status{
+    color: #D4AF37;
+    font-weight: 700;
+}
+.btn-checkout{
+    background-color: #D4AF37 ;
+    color: #38435F;
+    font-weight: 500;
+    width: 15rem;
+}
+.status{
+    color: #D4AF37;
+    font-weight: 600;
+}

@@ -37,12 +37,40 @@
     <link rel="stylesheet" href="../public/css/details.css">
     <link rel="stylesheet" href="../public/css/slider.css">
     <link rel="stylesheet" href="../public/css/loader.css">
+    
 
     <title>Details Event | Lumintu Event</title>
 </head>
 
 <body>
     <div class="container-fluid banner-event mb-4">
+    <div class="container container-nav">
+    <nav class="navbar navbar-expand-lg navbar-light text-white">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white mr-4" href="main.php">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white mr-4" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white mr-4" href="#">Webinars</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white mr-4" href="#">Workshops</a>
+                </li>
+            </ul>
+            <div class="my-2 my-lg-0">X</div>
+        </div>
+    </nav>
+</div>
+
         <div class="container deskripsi d-flex align-items-center justify-content-start">
             <div class="jumbotron rounded my-auto p-lg-5 p-sm-3 p-3">
                 <h1 class="h3 nama-event"></h1>
@@ -52,8 +80,6 @@
                     Ticket</button>
             </div>
         </div>
-
-
     </div>
 
     <div class="container">
@@ -112,11 +138,14 @@
                                         onclick="addInputFieldInvitation()">
                                         <i class="fa fa-plus"></i>
                                     </button>
+                                    <button type="button" class="btn btn-default btn-circle btn-lg rounded-circle"
+                                        onclick="delInputFieldInvitation()">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
                                 </div>
                                 <div class="modal-footer border-0">
                                     <div class="container text-center">
-                                        <button class="btn btn-buy w-50 btn-invite" type="submit"
-                                            disabled>Invite</button>
+                                        <button class="btn btn-buy w-50 btn-invite" type="submit">Invite</button>
                                     </div>
                                 </div>
 

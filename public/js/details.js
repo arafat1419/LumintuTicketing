@@ -182,6 +182,18 @@ let addInputFieldInvitation = () => {
   validate(`peserta${quantity}`);
   $(`#peserta${quantity} #emailHelpBlock`).removeClass('d-none');
 };
+//Function untuk mengurangi field untuk mengisi email invitation
+let delInputFieldInvitation = () => {
+  let quantity = document.querySelectorAll('.peserta').length;
+  let elem = document.getElementById('peserta1');
+  let cln = elem.cloneNode(true);
+  cln.id = 'peserta' + quantity;
+  console.log(cln.id);
+  if(quantity > 1){
+  $(`#${cln.id}`).last().remove();
+  }
+  
+};
 
 // Function Validate Email dengan REGEX
 let validateEmail = (email) => {
