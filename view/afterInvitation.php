@@ -37,7 +37,7 @@
                         <p class="h4 text-white text-center">YOUR DATA IS BEING UPLOADED</p>
                         <p class="h4 text-white text-center">SUCCESSFULLY</p>
                         <div class="container mt-5">
-                                    <button type="submit" value="submit" name="submit" class="btn rounded py-1 px-5 btn-checkout " disabled>DONE</button>
+                                    <button type="submit" value="submit" name="submit" class="btn rounded py-1 px-5 btn-checkout " href="/main.php">DONE</button>
                                 </div>
                     </div>
                 </div>

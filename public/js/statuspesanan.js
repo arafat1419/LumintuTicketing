@@ -4,60 +4,88 @@ let statusPemesanan = []; // Array Status Invitation
 let pembelian = []; // Array menampung harga tiket pilihan
 let ip = 'api-ticket.arisukarno.xyz'; // IP API
 
-let voucherAvailable = false;
+
 
 
 $(`#useVoucher`).click(() => {
   const voucherCode = $(`#voucherCode`).val();
+  let voucherAvailable = false;
 
   $.ajax({
     url: `https://${ip}/items/voucher`,
     type: 'GET',
     dataType : 'json',
     success: function (data, textStatus, xhr) {
+      // data.data.map((item) => {
+      //   if(item.voucher_code == voucherCode) {
+      //     voucherAvailable = true;
+      //     console.log(item.voucher_id);
+      //     // http://api-ticket.arisukarno.xyz:8055/items/ticket_x_voucher?fields=voucher_id.*,ticket_id.ticket_type,ticket_id.ticket_price&filter[voucher_id.voucher_id]=1
+
+      //       $.ajax({
+      //         url: `https://${ip}/items/order?fields=voucher_id.*,invoice_id.invoice_id,invoice_id.invoice_status&filter[voucher_id.voucher_id]=${item.voucher_id}`,
+      //         type: 'GET',
+      //         dataType : 'json',
+      //         success: function (data, textStatus, xhr) {
+      //           if (data.data.length > 0) {
+                  
+      //             let voucherStock = data.data[0].voucher_id.voucher_stock;
+      //             let invoiceExipired = 0;
+      //             let invoiceId = [];
+
+      //             data.data.map((item2) => {
+      //               // console.log(item2.invoice_id);
+      //               if(!(invoiceId.includes(item2.invoice_id.invoice_id))) {
+      //                 if(item2.invoice_id.invoice_status == 2) {
+      //                   invoiceExipired++;
+      //                 }
+      //                 invoiceId.push(item2.invoice_id.invoice_id);
+      //               }
+      //             })
+
+      //             let stokVoucher = voucherStock - invoiceId.length + invoiceExipired;
+      //             console.log("Stok Voucher - " + stokVoucher);
+
+      //             if (stokVoucher > 0) {
+      //               addTicket(item.voucher_id, voucherCode); // ADD TICKET IF VOUCHER HAS BEEN USED
+      //             } else {
+      //               alert("Voucher telah habis");
+      //             }
+      //           } else {
+      //             addTicket(item.voucher_id, voucherCode); // ADD TICKET IF VOUCHER NEVER USED
+      //           }
+      //         },
+      //         error: function (xhr, textStatus, errorThrown) {
+      //           console.log('Error in Database');
+      //         }
+      //       })
+      //   }
+      // })
       data.data.map((item) => {
         if(item.voucher_code == voucherCode) {
           voucherAvailable = true;
-          console.log(item.voucher_id);
-          // http://api-ticket.arisukarno.xyz:8055/items/ticket_x_voucher?fields=voucher_id.*,ticket_id.ticket_type,ticket_id.ticket_price&filter[voucher_id.voucher_id]=1
-
-            $.ajax({
-              url: `https://${ip}/items/order?fields=voucher_id.*,invoice_id.invoice_id,invoice_id.invoice_status&filter[voucher_id.voucher_id]=${item.voucher_id}`,
-              type: 'GET',
-              dataType : 'json',
-              success: function (data, textStatus, xhr) {
-                if (data.data.length > 0) {
-                  
-                  let voucherStock = data.data[0].voucher_id.voucher_stock;
-                  let invoiceExipired = 0;
-                  let invoiceId = [];
-
-                  data.data.map((item2) => {
-                    // console.log(item2.invoice_id);
-                    if(!(invoiceId.includes(item2.invoice_id.invoice_id))) {
-                      if(item2.invoice_id.invoice_status == 2) {
-                        invoiceExipired++;
-                      }
-                      invoiceId.push(item2.invoice_id.invoice_id);
-                    }
-                  })
-
-                  let stokVoucher = voucherStock - invoiceId.length + invoiceExipired;
-                  console.log("Stok Voucher - " + stokVoucher);
-
-                  if (stokVoucher > 0) {
-                    addTicket(item.voucher_id, voucherCode); // ADD TICKET IF VOUCHER HAS BEEN USED
-                  } else {
-                    alert("Voucher telah habis");
-                  }
+          $.ajax({
+            url: `https://${ip}/items/voucher?filter[voucher_id]=${item.voucher_id}`,
+            type: 'GET',
+            dataType : 'json',
+            success: function (data, textStatus, xhr) {
+              console.log(data);
+              if (data.data.length > 0) {
+                let voucherAvailable = data.data[0].voucher_available;
+                console.log(voucherAvailable);  
+                if (voucherAvailable > 0) {
+                  addTicket(item.voucher_id, voucherCode); // ADD TICKET IF VOUCHER HAS BEEN USED
                 } else {
-                  addTicket(item.voucher_id, voucherCode); // ADD TICKET IF VOUCHER NEVER USED
+                  alert("Voucher telah habis");
                 }
-              },
-              error: function (xhr, textStatus, errorThrown) {
-                console.log('Error in Database');
+              } else {
+                addTicket(item.voucher_id, voucherCode); // ADD TICKET IF VOUCHER NEVER USED
               }
-            })
+            },
+            error: function (xhr, textStatus, errorThrown) {
+              console.log('Error in Database');
+            }
+          })
         }
       })
       if(!voucherAvailable) {
@@ -73,7 +101,7 @@ $(`#useVoucher`).click(() => {
 
 function addTicket(voucherId, voucherCode) {
   $.ajax({
-    url: `http://api-ticket.arisukarno.xyz:8055/items/ticket_x_voucher?fields=voucher_id.*,ticket_id.ticket_type,ticket_id.ticket_price,ticket_id.ticket_seat&filter[voucher_id.voucher_id]=${voucherId}`,
+    url: `https://api-ticket.arisukarno.xyz/items/ticket_x_voucher?fields=voucher_id.*,ticket_id.ticket_type,ticket_id.ticket_price,ticket_id.ticket_seat&filter[voucher_id.voucher_id]=${voucherId}`,
     type: 'GET',
     dataType : 'json',
     success: function (data, textStatus, xhr) {

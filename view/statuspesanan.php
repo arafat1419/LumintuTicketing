@@ -1,6 +1,8 @@
 <?php
     session_start();
     $_SESSION['cred'] = $_GET['m'];
+
+    include '../controller/checkAvailable.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
