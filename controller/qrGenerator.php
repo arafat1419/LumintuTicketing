@@ -20,7 +20,7 @@
     $urlIP = 'api-ticket.arisukarno.xyz';
     $html2pdf = new Html2Pdf('P','A4','en', false, 'UTF-8', array(25,15,30,0));
 
-    $ticketDataURL ="https://api-ticket.arisukarno.xyz/items/order?fields=invoice_id,customer_id.customer_id,customer_id.customer_name,customer_id.customer_email,ticket_id.ticket_type,ticket_id.ticket_x_day.day_id.day_date,ticket_id.event_id.event_name,ticket_id.event_id.event_address&filter[invoice_id][invoice_status]=1&filter[customer_id][customer_id]=2";
+    $ticketDataURL ="https://api-ticket.arisukarno.xyz/items/order?fields=invoice_id,customer_id.customer_id,customer_id.customer_name,customer_id.customer_email,ticket_id.ticket_type,ticket_id.ticket_x_day.day_id.day_date,ticket_id.event_id.event_name,ticket_id.event_id.event_address&filter[invoice_id][invoice_status]=0&filter[customer_id][customer_id]=191";
     $qrCodeURL = 'https://api-ticket.arisukarno.xyz/items/qrcode';
 
     $curl = curl_init();
@@ -232,13 +232,13 @@
         $detailType = '';
         $detailDay = '';
 
-//        $pdfName = 'QR-' . $customerId . '-' . $data[$i]['ticket_id']['ticket_type'] . '.pdf';
-//
-//        $html2pdf->pdf->SetDisplayMode('fullpage');
-//        $html2pdf->writeHTML($mailMessage);
-//        $html2pdf->output(__DIR__ . DIRECTORY_SEPARATOR . '..' . '/public/pdfFile/' . $pdfName, 'F');
-////        file_put_contents('../public/pdfFile/QR-' . $customerId . '-' . $data[$i]['ticket_id']['ticket_type'] . '.pdf', $html2pdf->output());
-//        $html2pdf->clean();
+       $pdfName = 'QR-' . $customerId . '-' . $data[$i]['ticket_id']['ticket_type'] . '.pdf';
+
+       $html2pdf->pdf->SetDisplayMode('fullpage');
+       $html2pdf->writeHTML($mailMessage);
+       $html2pdf->output(__DIR__ . DIRECTORY_SEPARATOR . '..' . '/public/pdfFile/' . $pdfName, 'F');
+    //    file_put_contents('../public/pdfFile/QR-' . $customerId . '-' . $data[$i]['ticket_id']['ticket_type'] . '.pdf', $html2pdf->output());
+       $html2pdf->clean();
 
         $mail = new PHPMailer();
         $mail->SMTPDebug = 0;
@@ -256,7 +256,7 @@
         $mail->isHTML(true);
         $mail->Body = $mailMessage;
 
-//        $mail->addAttachment(__DIR__ . DIRECTORY_SEPARATOR . '..' . '../public/pdfFile/QR-' . $customerId . '-' . $data[$i]['ticket_id']['ticket_type'] . '.pdf', $qrOutput);
+        $mail->addAttachment(__DIR__ . DIRECTORY_SEPARATOR . '..' . '/public/pdfFile/' . $pdfName);
 
         $mail->send();
     }
