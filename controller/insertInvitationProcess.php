@@ -99,6 +99,7 @@
                 header('Location: ../view/details.php?mailErrSolo');
             }
         } else {
+            // test
                 $pesertaEmail = $_POST['peserta1'];
                 $mail = new PHPMailer();
                 $mail->SMTPDebug = 0;
