@@ -9,7 +9,9 @@ $date->add(new DateInterval("P1D"));
 
 $currentDate = new DateTime();
 $addDate = new DateTime();
-$addDate->add(new DateInterval("P1D"));
+$addDate->add(new DateInterval("P2D"));
+
+echo $currentDate->format('c') . "<br>";
 
 if ($addDate > $currentDate) {
     echo $addDate->format('c');

@@ -5,7 +5,29 @@ $_SESSION['cred'] = $_GET['m'];
 
 $urlIP = 'api-ticket.arisukarno.xyz';
 
-$urlInvoice = "https://" . $urlIP .  "/items/order?fields=invoice_id.*,customer_id.customer_name,ticket_id.ticket_type,ticket_id.ticket_price,ticket_id.event_id.event_name,voucher_id.voucher_code,voucher_id.voucher_discount&filter[customer_id][customer_code]=" . $_SESSION['cred'] . "&filter[invoice_id][invoice_status]=pending";
+$urlGet = "https://" . $urlIP .  "/items/order?fields=customer_id.*,invoice_id.invoice_id&filter[customer_id][customer_code]=" . $_SESSION['cred'] . "&filter[invoice_id][invoice_status]=pending";
+
+$curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $urlGet,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+
+        $responseGet = curl_exec($curl);
+        $resultGet = json_decode($responseGet, true);
+        $lengthGet = $resultGet["data"];
+        curl_close($curl);
+        $invoiceId = $lengthGet[0]['invoice_id']['invoice_id'];
+
+
+$urlInvoice = "https://" . $urlIP .  "/items/order?fields=invoice_id.*,customer_id.customer_name,ticket_id.ticket_type,ticket_id.ticket_price,ticket_id.event_id.event_name,voucher_id.voucher_code,voucher_id.voucher_discount&filter[invoice_id][invoice_id]=" . $invoiceId;
 
 $curl = curl_init();
 
@@ -19,7 +41,6 @@ $dataInvoice = $resultInvoice["data"];
 $field = "";
 $fieldVoucher = "";
 curl_close($curl);
-
 
 for ($i = 0; $i < sizeof($dataInvoice); $i++) {
     $customerName = $dataInvoice[$i]['customer_id']['customer_name'];
@@ -44,8 +65,9 @@ for ($i = 0; $i < sizeof($dataInvoice); $i++) {
 }
 
 $eventName = $dataInvoice[0]['ticket_id']['event_id']['event_name'];
+// echo $eventName;
 
-$url = 'https://' . $urlIP . '/items/order?fields=order_id,customer_id.*,invoice_id.invoice_id,invoice_id.invoice_total,invoice_id.invoice_status,ticket_id.event_id.event_name,ticket_id.ticket_price,ticket_id.ticket_id,voucher_id.voucher_id,voucher_id.voucher_code,voucher_id.voucher_discount&filter[customer_id][customer_code]=' . $_SESSION['cred'] . '&filter[invoice_id][invoice_status]=pending';
+$url = 'https://' . $urlIP . '/items/order?fields=order_id,invoice_id.invoice_id,invoice_id.invoice_total,invoice_id.invoice_status,ticket_id.event_id.event_name,ticket_id.ticket_price,ticket_id.ticket_id,voucher_id.voucher_id,voucher_id.voucher_code,voucher_id.voucher_discount&filter[invoice_id][invoice_id]=' . $invoiceId;
 
 $curl = curl_init();
 
@@ -59,10 +81,10 @@ $dataLengthID = $resultID["data"];
 // echo $responseID;
 
 $customer_details = array(
-    'first_name'    => $resultID['data'][0]['customer_id']['customer_name'],
+    'first_name'    => $lengthGet[0]['customer_id']['customer_name'],
     'last_name'     => "",
-    'email'         => $resultID['data'][0]['customer_id']['customer_email'],
-    'phone'         => $resultID['data'][0]['customer_id']['customer_phone'],
+    'email'         => $lengthGet[0]['customer_id']['customer_email'],
+    'phone'         => $lengthGet[0]['customer_id']['customer_phone'],
 );
 
 $transaction_details = array(
@@ -72,15 +94,24 @@ $transaction_details = array(
 
 $item_details = [];
 
-$item1_details = array(
-    'id' => $resultID['data'][0]['ticket_id']['ticket_id'],
-    'price' => $resultID['data'][0]['ticket_id']['ticket_price'],
-    'quantity' => 1,
-    'name' => $resultID['data'][0]['ticket_id']['event_id']['event_name']
-);
+// $item1_details = array(
+//     'id' => $resultID['data'][0]['ticket_id']['ticket_id'],
+//     'price' => $resultID['data'][0]['ticket_id']['ticket_price'],
+//     'quantity' => 1,
+//     'name' => $resultID['data'][0]['ticket_id']['event_id']['event_name']
+// );
+
+for ($j = 0; $j < sizeof($dataLengthID); $j++) {
+    $item1_details = array(
+        'id' => $resultID['data'][$j]['ticket_id']['ticket_id'],
+        'price' => $resultID['data'][$j]['ticket_id']['ticket_price'],
+        'quantity' => 1,
+        'name' => $resultID['data'][$j]['ticket_id']['event_id']['event_name']
+    );
+    array_push($item_details, $item1_details);
+}
 
 
-array_push($item_details, $item1_details);
 if (!is_null($resultID['data'][0]['voucher_id'])){
     $price = $resultID['data'][0]['voucher_id']['voucher_discount'];
     $voucherCode = $resultID['data'][0]['voucher_id']['voucher_code'] . " (VOUCHER)";

@@ -20,6 +20,9 @@
 
     $counter = 0;
 
+    $currentDate = new DateTime();
+    $addDate = $currentDate->add(new DateInterval("P2D"));
+
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, $customerURL . '?&filter[customer_code]=' . $cred);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -46,7 +49,9 @@
                 CURLOPT_POSTFIELDS =>'{
                         "customer_id": "' . $inviterID . '",
                         "customer_inviter_id": " '. $inviterID .' ",
-                        "invitation_status": "1"
+                        "invitation_status": "1",
+                        "invitation_date": "' . $currentDate->format('c') . '",
+                        "invitation_end": "' . $addDate->format('c') . '"
                     }',
                 CURLOPT_HTTPHEADER => array(
                     'Content-Type: application/json'
@@ -122,7 +127,9 @@
                 CURLOPT_POSTFIELDS =>'{
                         "customer_id": "' . $inviterID . '",
                         "customer_inviter_id": " '. $inviterID .' ",
-                        "invitation_status": "1"
+                        "invitation_status": "1",
+                        "invitation_date": "' . $currentDate->format('c') . '",
+                        "invitation_end": "' . $addDate->format('c') . '"
                     }',
                 CURLOPT_HTTPHEADER => array(
                     'Content-Type: application/json'
@@ -183,7 +190,9 @@
                         CURLOPT_POSTFIELDS =>'{
                         "customer_id": "' . $resultID['data'][0]['customer_id'] . '",
                         "customer_inviter_id": " '. $inviterID .' ",
-                        "invitation_status": "0"
+                        "invitation_status": "0",
+                        "invitation_date": "' . $currentDate->format('c') . '",
+                        "invitation_end": "' . $addDate->format('c') . '"
                     }',
                         CURLOPT_HTTPHEADER => array(
                             'Content-Type: application/json'

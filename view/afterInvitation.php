@@ -1,6 +1,6 @@
 <?php
-    session_start();
-    $_SESSION['cred'] = $_GET['m'];
+    // session_start();
+    // $_SESSION['cred'] = $_GET['m'];
 
     // echo $_SESSION['cred'];
 ?>
