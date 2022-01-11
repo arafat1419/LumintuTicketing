@@ -74,7 +74,7 @@
             <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 p-5 registrasi-side">
                 <!-- Start Registration Side -->
                 <div class="registrasi-side-header mb-4">
-                    <p class="h2 text-center mb-3 text-white">Create an account</p>
+                    <p class="h2 text-center mb-3 text-white">Create an account Yeah2</p>
                     <blockquote class="blockquote text-center mb-3">
                         <p class="mb-0 font-italic gold h6">Get to know about something first, before you can love it
                             better</p>
