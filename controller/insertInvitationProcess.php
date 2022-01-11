@@ -33,6 +33,11 @@
 
     curl_close($curl);
 
+    echo "<br>" . $numberOfPost . "<br>";
+    echo "<br>" .  $_POST['peserta1'] . "<br>";
+    echo "<br>" .  $inviterEmail . "<br>";
+
+
     if ($numberOfPost == 1) {
         if ($inviterEmail == $_POST['peserta1']) {
             $curl = curl_init();
@@ -93,6 +98,131 @@
             } else {
                 header('Location: ../view/details.php?mailErrSolo');
             }
+        } else {
+                $pesertaEmail = $_POST['peserta1'];
+                $mail = new PHPMailer();
+                $mail->SMTPDebug = 0;
+                $mail->isSMTP();
+                $mail->SMTPSecure = 'tls';
+                $mail->Host = 'smtp.gmail.com';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'mintuticketing@gmail.com';
+                $mail->Password = 'Mintu123';
+                $mail->Port = 587;
+
+                $mail->setFrom('mintuticketing@gmail.com', 'Lumintu Events');
+
+                    echo "JALAN X == 1 <br>";
+                    $mail->addAddress($inviterEmail);
+                    $mail->Subject = "[Lumintu Events] Link Pemesanan Tiket";
+                    $mail->isHTML(true);
+//                    $mail->Body = 'Hai ' . $inviterEmail . ', silahkan klik link berikut untuk melakukan pemesanan tiket<br/><br/>
+//                                        <a href="' . $buyTicketLink . '?m=' . $cred .'">Pesan Tiket</a>';
+                    $mailLocation = '../view/email/emailToOrder.html';
+                    $message = file_get_contents($mailLocation);
+                    $message = str_replace('%inviterMail%', $inviterEmail, $message);
+                    $message = str_replace('%link%', $buyTicketLink . '?m=' . $cred, $message);
+                    $mail->msgHTML($message);
+                if ($mail->send()){
+                    header('Location: ../view/details.php?allScs');
+                }else{
+                    header('Location: ../view/details.php?mailFailed');
+                }
+
+                $mail->clearAddresses();
+
+
+                    echo "JALAN <br>";
+                    echo `Peserta email = $pesertaEmail <br>`;
+                    $mail->addAddress($pesertaEmail);
+                    $mail->Subject = "[Lumintu Events] Link Pengisian Biodata Pemesanan Tiket";
+                    $mail->isHTML(true);
+//                    $mail->Body = 'Silahkan klik link berikut untuk melakukan pengisian biodata untuk pemesanan tiket.<br/><br/>
+//                                <a href="' . $bioLink . '?invm=' . base64_encode($pesertaEmail) .'">Pesan Tiket</a>';
+
+                    $mailLocation = '../view/email/emailInvitation.html';
+                    $message = file_get_contents($mailLocation);
+                    $message = str_replace('%receiverMail%', $pesertaEmail, $message);
+                    $message = str_replace('%inviterMail%', $inviterEmail, $message);
+                    $message = str_replace('%link%', $bioLink . '?invm=' . base64_encode($pesertaEmail), $message);
+                    $mail->msgHTML($message);
+                    if ($mail->send()){
+                        header('Location: ../view/details.php?allScs');
+                    }else{
+                        header('Location: ../view/details.php?mailFailed');
+                    }
+                    $mail->clearAddresses();
+
+                $curl = curl_init();
+
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => $customerURL,
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => '',
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => 'POST',
+                        CURLOPT_POSTFIELDS =>'{
+                        "customer_email": "' . $pesertaEmail . '"
+                    }',
+                        CURLOPT_HTTPHEADER => array(
+                            'Content-Type: application/json'
+                        ),
+                    ));
+    
+                    $getResponse = curl_exec($curl);
+                    $onCreateResponseCustomer = json_decode($getResponse, true);
+    
+                    curl_close($curl);
+    
+                    if (!isset($onCreateResponseCustomer['errors'][0]['extensions']['code'])){
+                        $curl = curl_init();
+                        curl_setopt($curl, CURLOPT_URL, $customerURL . '?&filter[customer_email]=' . $_POST['peserta1']);
+                        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+                        $responseID = curl_exec($curl);
+                        $resultID = json_decode($responseID, true);
+    
+                        curl_close($curl);
+    
+                        $curl = curl_init();
+    
+                        curl_setopt_array($curl, array(
+                            CURLOPT_URL => $invitationURL,
+                            CURLOPT_RETURNTRANSFER => true,
+                            CURLOPT_ENCODING => '',
+                            CURLOPT_MAXREDIRS => 10,
+                            CURLOPT_TIMEOUT => 0,
+                            CURLOPT_FOLLOWLOCATION => true,
+                            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                            CURLOPT_CUSTOMREQUEST => 'POST',
+                            CURLOPT_POSTFIELDS =>'{
+                            "customer_id": "' . $resultID['data'][0]['customer_id'] . '",
+                            "customer_inviter_id": " '. $inviterID .' ",
+                            "invitation_status": "0",
+                            "invitation_date": "' . $currentDate->format('c') . '",
+                            "invitation_end": "' . $addDate->format('c') . '"
+                        }',
+                            CURLOPT_HTTPHEADER => array(
+                                'Content-Type: application/json'
+                            ),
+                        ));
+    
+                        $getResponse = curl_exec($curl);
+                        $onCreateResponseInvitation = json_decode($getResponse, true);
+    
+                        curl_close($curl);
+    
+                        if (!isset($onCreateResponseInvitation['errors'][0]['extensions']['code'])){
+    
+                        }else{
+                            header('Location: ../view/details.php?errOnInv');
+                        }
+                    }
+                    else{
+                        header('Location: ../view/details.php?errCus');
+                    }
         }
     }else{
 
