@@ -6,6 +6,7 @@
       "ext-json": "*",
       "endroid/qr-code": "^3.9",
       "spipu/html2pdf": "^5.2",
-      "dompdf/dompdf": "^1.0"
+      "dompdf/dompdf": "^1.0",
+        "midtrans/midtrans-php": "^2.5"
     }
 }

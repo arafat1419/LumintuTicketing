@@ -116,7 +116,7 @@
                         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                         CURLOPT_CUSTOMREQUEST => 'PATCH',
                         CURLOPT_POSTFIELDS =>'{
-                            "invoice_status": 1
+                            "invoice_status": "settlement"
                         }',
                         CURLOPT_HTTPHEADER => array(
                             'Content-Type: application/json'

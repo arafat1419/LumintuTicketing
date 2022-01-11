@@ -247,7 +247,8 @@ $(document).ready(function () {
           console.log(data.data.length);
 
           data.data.map((item, index) => {
-            pembelian.push(0);
+            if(item.invitation_status == 0 || item.invitation_status == 1) {
+              pembelian.push(0);
             tableRow = `
                     <tr>
                         <td>
@@ -283,6 +284,7 @@ $(document).ready(function () {
               statusPemesanan.push(false);
             }
             console.log(statusPemesanan);
+            }
           });
 
           optionTicket.map((item, index) => {
