@@ -207,6 +207,7 @@
             }
 
             for ($x = 1; $x <= $numberOfPost; $x++){
+                echo "JALAN PERULANGAN <br>";
                 $pesertaEmail = $_POST['peserta'.$x];
                 $mail = new PHPMailer();
                 $mail->SMTPDebug = 0;
@@ -221,6 +222,7 @@
                 $mail->setFrom('mintuticketing@gmail.com', 'Lumintu Events');
 
                 if ($x == 1){
+                    echo "JALAN X == 1 <br>";
                     $mail->addAddress($inviterEmail);
                     $mail->Subject = "[Lumintu Events] Link Pemesanan Tiket";
                     $mail->isHTML(true);
@@ -233,6 +235,8 @@
                     $mail->msgHTML($message);
                 }
                 else{
+                    echo "JALAN <br>";
+                    echo `Peserta email = $pesertaEmail <br>`;
                     $mail->addAddress($pesertaEmail);
                     $mail->Subject = "[Lumintu Events] Link Pengisian Biodata Pemesanan Tiket";
                     $mail->isHTML(true);

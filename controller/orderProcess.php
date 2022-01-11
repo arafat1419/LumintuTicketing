@@ -14,7 +14,7 @@
 
     require_once '../vendor/dompdf/dompdf/src/Autoloader.php';
 
-    $uploadPaymentLink = 'http://localhost/LumintuTicketing/view/uploadPayment.php';
+    $invoiceLink = 'http://localhost/LumintuTicketing/view/invoice.php';
 
     $urlIP = 'api-ticket.arisukarno.xyz';
 
@@ -27,10 +27,14 @@
     $customerURL = 'https://' . $urlIP . '/items/customer';
     $orderURL = 'https://' . $urlIP . '/items/order';
     $voucherURL = 'https://' . $urlIP . '/items/voucher';
+    $invitationURL = "https://' . $urlIP . 'items/invitation";
 
     $document = new DOMPDF('P', 'A4', 'en', false, 'UTF-8');
 
     $price = $_POST['total-harga'];
+    $currentDate = new DateTime();
+    $addDate = $currentDate->add(new DateInterval("P1D"));
+
     $curl = curl_init();
 
     //get customer ID
@@ -56,7 +60,7 @@
     $curl = curl_init();
 
     if (sizeof($invitationDataLength) == 1){
-        echo "Jalan line 58" . "\n";
+        // echo "Jalan line 58" . "\n";
         if ($_POST['voucher'] != ''){
             $voucher = $_POST['voucher'];
             echo $voucher;
@@ -96,7 +100,9 @@
                 CURLOPT_POSTFIELDS =>'{
                 "customer_id": "' . $customerID . '",
                 "invoice_total": "' . $totalPrice . '",
-                "invoice_status": 0
+                "invoice_status": "pending",
+                "invoice_date": "' . $currentDate->format('c') . '",
+                "invoice_end": "' . $addDate->format('c') . '"
             }',
                 CURLOPT_HTTPHEADER => array(
                     'Content-Type: application/json'
@@ -108,6 +114,35 @@
             echo "\n" . var_export($resultA) . "\n";
 
             curl_close($curl);
+
+            // --
+            $curl = curl_init();
+
+            //post to invitation
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => $invitationURL . "/" . $customerID,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'PATCH',
+                CURLOPT_POSTFIELDS =>'{
+                "invitation_status": 2
+            }',
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json'
+                ),
+            ));
+
+            $responseA = curl_exec($curl);
+            $resultA = json_decode($responseA, true);  
+            echo "\n" . var_export($resultA) . "\n";
+
+            curl_close($curl);
+            // --
+
             $curl = curl_init();
 
             //post to voucher
@@ -144,7 +179,36 @@
                 CURLOPT_POSTFIELDS =>'{
                 "customer_id": "' . $customerID . '",
                 "invoice_total": "' . $price . '",
-                "invoice_status": 0
+                "invoice_status": "pending",
+                "invoice_date": "' . $currentDate->format('c') . '",
+                "invoice_end": "' . $addDate->format('c') . '"
+            }',
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json'
+                ),
+            ));
+            $responseA = curl_exec($curl);
+            $resultA = json_decode($responseA, true);  
+            echo "\n" . var_export($resultA) . "\n";
+
+            curl_close($curl);
+            // --
+
+            // --
+            $curl = curl_init();
+
+            //post to invitation
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => $invitationURL . "/" . $customerID,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'PATCH',
+                CURLOPT_POSTFIELDS =>'{
+                "invitation_status": 2
             }',
                 CURLOPT_HTTPHEADER => array(
                     'Content-Type: application/json'
@@ -154,6 +218,7 @@
 
         $server_response = curl_exec($curl);
         $postResponse = json_decode($server_response, true);
+        echo "\n" . var_export($server_response) . "\n";
 
         curl_close($curl);
 
@@ -544,7 +609,9 @@
             CURLOPT_POSTFIELDS => '{
                 "customer_id": "' . $customerID . '",
                 "invoice_total": "' . $price . '",
-                "invoice_status": 0
+                "invoice_status": "pending",
+                "invoice_date": "' . $currentDate->format('c') . '",
+                "invoice_end": "' . $addDate->format('c') . '"
             }',
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json'
@@ -555,6 +622,35 @@
         $invoicePostResponse = json_decode($invoice_server_response, true);
 
         curl_close($curl);
+
+        // --
+        $curl = curl_init();
+
+        //post to invitation
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $invitationURL . "/" . $customerID,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'PATCH',
+            CURLOPT_POSTFIELDS =>'{
+            "invitation_status": 2
+        }',
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json'
+            ),
+        ));
+
+        $responseA = curl_exec($curl);
+        $resultA = json_decode($responseA, true);  
+        echo "\n" . var_export($resultA) . "\n";
+
+        curl_close($curl);
+        // --
+
         $curl = curl_init();
 
         if (isset($invoicePostResponse['errors'][0]['extensions']['code'])) {
@@ -751,12 +847,13 @@
     }
 
     if (isset($customerPostResponse['errors'][0]['extensions']['code'])){
-        header('Location: ../view/statusPesanan.php?errCus');
+        echo $customerPostResponse;
+        // header('Location: ../view/statusPesanan.php?errCus');
     }else{
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $orderURL . '?fields=customer_id.customer_name,ticket_id.ticket_type,ticket_id.ticket_price,invoice_id.invoice_total,voucher_id.voucher_discount&filter%5Binvoice_id%5D%5Bcustomer_id%5D=' . $customerID,
+            CURLOPT_URL => $orderURL . '?fields=customer_id.customer_name,ticket_id.ticket_type,ticket_id.ticket_price,invoice_id.invoice_total,invoice_id.invoice_status,voucher_id.voucher_discount&filter[customer_id][customer_id]=' . $customerID . "&filter[invoice_id][invoice_status]=pending",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -993,11 +1090,14 @@
         $mailLocation = '../view/email/emailInvoice.html';
         $message = file_get_contents($mailLocation);
         $message = str_replace('%name%', $resultID['data'][0]['customer_name'], $message);
-        $message = str_replace('%link%', $uploadPaymentLink . "?m=" . $_SESSION['cred'], $message);
+        $message = str_replace('%link%', $invoiceLink . "?m=" . $_SESSION['cred'], $message);
 
         $mail->msgHTML($message);
         $mail->addAttachment('../public/pdfFile/Invoice-' . $customerID . '.pdf');
 
         $mail->send();
     }
+
+    header('Location: ../view/paymentMidtrans.php?m=' . $_SESSION['cred']);
+    
 ?>

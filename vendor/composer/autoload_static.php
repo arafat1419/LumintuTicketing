@@ -45,6 +45,7 @@ class ComposerStaticIniteb0e6d744faf65a5855cf19c24d6f72f
         'M' => 
         array (
             'MyCLabs\\Enum\\' => 13,
+            'Midtrans\\' => 9,
         ),
         'F' => 
         array (
@@ -125,6 +126,10 @@ class ComposerStaticIniteb0e6d744faf65a5855cf19c24d6f72f
         'MyCLabs\\Enum\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/php-enum/src',
+        ),
+        'Midtrans\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/midtrans/midtrans-php/Midtrans',
         ),
         'FontLib\\' => 
         array (

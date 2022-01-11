@@ -49,7 +49,7 @@ for ($i = 0; $i < $dataLengthID; $i++) {
 // echo "COunt :" . count($voucherId) . "<br>";
 
 for ($i = 0; $i < count($voucherId); $i++) {
-    echo $voucherId[$i] . "<br>";
+    // echo $voucherId[$i] . "<br>";
     // echo "<br><br><br>";
 
     // GET VOUCHER
@@ -70,7 +70,7 @@ for ($i = 0; $i < count($voucherId); $i++) {
     $invoiceExpired = 0;
     $invoiceId = [];
 
-    echo "Data Length = " . $dataLengthID . "<br>";
+    // echo "Data Length = " . $dataLengthID . "<br>";
 
     for($j = 0; $j < $dataLengthID; $j++) {
         // echo "INNNNNNN = " . $resultID["data"][$j]["invoice_id"]["invoice_id"] . " <br>";
@@ -91,9 +91,9 @@ for ($i = 0; $i < count($voucherId); $i++) {
     $voucherAvailable = $voucherStock - count($invoiceId) + $invoiceExpired;
     // echo "Voucher Available = " . $voucherAvailable . "<br><br><br>";
 
-    echo "Ticket Available = " . $voucherAvailable . "<br>";
-    echo "Ticket Invoice Expired = " . $invoiceExpired . "<br>";
-    echo "Ticket Invoice Id Count = " . count($invoiceId) . "<br>";
+    // echo "Ticket Available = " . $voucherAvailable . "<br>";
+    // echo "Ticket Invoice Expired = " . $invoiceExpired . "<br>";
+    // echo "Ticket Invoice Id Count = " . count($invoiceId) . "<br>";
 
     if ($getVoucherAvailable != $voucherAvailable) {
         $curl = curl_init();
@@ -128,7 +128,7 @@ for ($i = 0; $i < count($voucherId); $i++) {
 }
 
 
-echo "<br><br><br>";
+// echo "<br><br><br>";
 
 
 // GET TICKET
@@ -148,7 +148,7 @@ $dataLengthID = count($resultID["data"]);
 
 $ticketId = [];
 
-echo "ADD Length = " . $dataLengthID . "<br>";
+// echo "ADD Length = " . $dataLengthID . "<br>";
 
 for ($i = 0; $i < $dataLengthID; $i++) {
 
@@ -166,7 +166,7 @@ for ($i = 0; $i < $dataLengthID; $i++) {
     }
 }
 
-echo "Ticket Length = " . count($ticketId) . "<br>";
+// echo "Ticket Length = " . count($ticketId) . "<br>";
 
 for ($i = 0; $i < count($ticketId); $i++) {
     // echo $voucherId[$i] . "<br>";
@@ -190,7 +190,7 @@ for ($i = 0; $i < count($ticketId); $i++) {
     $invoiceExpiredTicket = 0;
     $invoiceIdTicket = [];
 
-    echo "Data Length = " . $dataLengthID . "<br>";
+    // echo "Data Length = " . $dataLengthID . "<br>";
 
     for($j = 0; $j < $dataLengthID; $j++) {
         if(!in_array($resultID["data"][$j]["invoice_id"]["invoice_id"], $invoiceIdTicket)) {
@@ -204,9 +204,9 @@ for ($i = 0; $i < count($ticketId); $i++) {
 
     $getTicketAvailable = $resultID["data"][0]["ticket_id"]["ticket_available"];
     $ticketAvailable = $ticketSeat - count($invoiceIdTicket) + $invoiceExpiredTicket;
-    echo "Voucher Available = " . $ticketAvailable . "<br>";
-    echo "Invoice Expired = " . $invoiceExpiredTicket . "<br>";
-    echo "Invoice Id Count = " . count($invoiceIdTicket) . "<br>";
+    // echo "Voucher Available = " . $ticketAvailable . "<br>";
+    // echo "Invoice Expired = " . $invoiceExpiredTicket . "<br>";
+    // echo "Invoice Id Count = " . count($invoiceIdTicket) . "<br>";
 
 
 
@@ -236,7 +236,7 @@ for ($i = 0; $i < count($ticketId); $i++) {
 
 
         if (!isset($postResponse['errors'][0]['extensions']['code'])){
-            echo "Bisaa" . "<br>";
+            // echo "Bisaa" . "<br>";
             // echo var_export($responseInvID);
         }
     }
