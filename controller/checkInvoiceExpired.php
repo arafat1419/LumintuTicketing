@@ -69,7 +69,7 @@ $resultInvitation = json_decode($responseInvitation, true);
 $dataInvitation = $resultInvitation["data"];
 curl_close($curl);
 
-echo $responseInvitation;
+// echo $responseInvitation;
 
 for ($j = 0; $j < sizeof($dataInvitation); $j++) {
     $invitationId = $dataInvitation[$j]["invitation_id"];
@@ -90,36 +90,38 @@ for ($j = 0; $j < sizeof($dataInvitation); $j++) {
     $dataEvent = $resultEvent["data"];
     curl_close($curl);
 
-    $getEventEnd = $dataEvent[0]['ticket_id']['event_id']['event_date_finished'];
-    $eventEnd = new DateTime($getEventEnd);
+    if (!empty($dataEvent)) {
+        $getEventEnd = $dataEvent[0]['ticket_id']['event_id']['event_date_finished'];
+        $eventEnd = new DateTime($getEventEnd);
 
-    if (($invitationStatus == "0") or ($invitationStatus == "1") ) {
-        echo "Jalan 1";
-        if($currentDateInvitation > $endDateInvitation or $currentDateInvitation > $eventEnd) {
-        echo "Jalan 2";
-            $curl = curl_init();
-                curl_setopt_array($curl, array(
-                    CURLOPT_URL => "https://api-ticket.arisukarno.xyz/items/invitation/$invitationId",
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_ENCODING => '',
-                    CURLOPT_MAXREDIRS => 10,
-                    CURLOPT_TIMEOUT => 0,
-                    CURLOPT_FOLLOWLOCATION => true,
-                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                    CURLOPT_CUSTOMREQUEST => 'PATCH',
-                        CURLOPT_POSTFIELDS =>'{
-                            "invitation_status": 4
-                    }',
-                    CURLOPT_HTTPHEADER => array(
-                        'Content-Type: application/json'
-                    ),
-                ));
-    
-                $response = curl_exec($curl);
-                $result = json_decode($response, true);
-                echo "<br>" . var_export($result) . "<br>";
-    
-                curl_close($curl);
+        if (($invitationStatus == "0") or ($invitationStatus == "1") ) {
+            echo "Jalan 1";
+            if($currentDateInvitation > $endDateInvitation or $currentDateInvitation > $eventEnd) {
+            echo "Jalan 2";
+                $curl = curl_init();
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => "https://api-ticket.arisukarno.xyz/items/invitation/$invitationId",
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => '',
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => 'PATCH',
+                            CURLOPT_POSTFIELDS =>'{
+                                "invitation_status": 4
+                        }',
+                        CURLOPT_HTTPHEADER => array(
+                            'Content-Type: application/json'
+                        ),
+                    ));
+        
+                    $response = curl_exec($curl);
+                    $result = json_decode($response, true);
+                    echo "<br>" . var_export($result) . "<br>";
+        
+                    curl_close($curl);
+            }
         }
     }
 }

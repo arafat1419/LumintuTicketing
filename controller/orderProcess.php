@@ -27,7 +27,9 @@
     $customerURL = 'https://' . $urlIP . '/items/customer';
     $orderURL = 'https://' . $urlIP . '/items/order';
     $voucherURL = 'https://' . $urlIP . '/items/voucher';
-    $invitationURL = "https://' . $urlIP . 'items/invitation";
+    $invitationURL = "https://' . $urlIP . '/items/invitation";
+
+
 
     $document = new DOMPDF('P', 'A4', 'en', false, 'UTF-8');
 
@@ -47,6 +49,7 @@
     $inviterEmail = $resultID['data'][0]['customer_email'];
 
     curl_close($curl);
+
     $curl = curl_init();
 
     //get customer-invitation-data
@@ -115,12 +118,36 @@
 
             curl_close($curl);
 
+            //---
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api-ticket.arisukarno.xyz/items/invitation?filter[customer_inviter_id]=" . $customerID,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+
+        $responseGet = curl_exec($curl);
+        $resultGet = json_decode($responseGet, true);
+        $lengthGet = $resultGet["data"];
+        curl_close($curl);
+
+        for ($x = 0; $x < sizeof($lengthGet); $x++) {
+            $invitationID = $lengthGet[$x]['invitation_id'];
+            echo $invitationID;
             // --
             $curl = curl_init();
 
+            echo $invitationURL . '/' . $customerID . "--2";
             //post to invitation
             curl_setopt_array($curl, array(
-                CURLOPT_URL => $invitationURL . "/" . $customerID,
+                CURLOPT_URL => 'https://api-ticket.arisukarno.xyz/items/invitation/' . $invitationID,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
@@ -138,10 +165,13 @@
 
             $responseA = curl_exec($curl);
             $resultA = json_decode($responseA, true);  
-            echo "\n" . var_export($resultA) . "\n";
+            echo "\n" . $responseA . "\n";
 
             curl_close($curl);
             // --
+        }
+
+        // ---
 
             $curl = curl_init();
 
@@ -194,33 +224,67 @@
             curl_close($curl);
             // --
 
-            // --
-            $curl = curl_init();
+            //---
 
-            //post to invitation
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => $invitationURL . "/" . $customerID,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'PATCH',
-                CURLOPT_POSTFIELDS =>'{
-                "invitation_status": 2
-            }',
-                CURLOPT_HTTPHEADER => array(
-                    'Content-Type: application/json'
-                ),
-            ));
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api-ticket.arisukarno.xyz/items/invitation?filter[customer_inviter_id]=" . $customerID,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+
+        $responseGet = curl_exec($curl);
+        $resultGet = json_decode($responseGet, true);
+        $lengthGet = $resultGet["data"];
+        curl_close($curl);
+
+            for ($x = 0; $x < sizeof($lengthGet); $x++) {
+                $invitationID = $lengthGet[$x]['invitation_id'];
+                echo $invitationID;
+                // --
+                $curl = curl_init();
+
+                echo $invitationURL . '/' . $customerID . "--2";
+                //post to invitation
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => 'https://api-ticket.arisukarno.xyz/items/invitation/' . $invitationID,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'PATCH',
+                    CURLOPT_POSTFIELDS =>'{
+                    "invitation_status": 2
+                }',
+                    CURLOPT_HTTPHEADER => array(
+                        'Content-Type: application/json'
+                    ),
+                ));
+
+                $responseA = curl_exec($curl);
+                $resultA = json_decode($responseA, true);  
+                echo "\n" . $responseA . "\n";
+
+                curl_close($curl);
+                // --
+            }
+
+        // ---
         }
 
-        $server_response = curl_exec($curl);
-        $postResponse = json_decode($server_response, true);
-        echo "\n" . var_export($server_response) . "\n";
+        // $server_response = curl_exec($curl);
+        // $postResponse = json_decode($server_response, true);
+        // echo "\n" . var_export($server_response) . "\n";
 
-        curl_close($curl);
+        // curl_close($curl);
 
         if (isset($postResponse['errors'][0]['extensions']['code'])){
             echo $postResponse['errors'][0]['extensions']['code'];
@@ -623,33 +687,60 @@
 
         curl_close($curl);
 
-        // --
+        //---
+
         $curl = curl_init();
 
-        //post to invitation
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $invitationURL . "/" . $customerID,
+            CURLOPT_URL => "https://api-ticket.arisukarno.xyz/items/invitation?filter[customer_inviter_id]=" . $customerID,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_TIMEOUT => 0,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'PATCH',
-            CURLOPT_POSTFIELDS =>'{
-            "invitation_status": 2
-        }',
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json'
-            ),
+            CURLOPT_CUSTOMREQUEST => 'GET',
         ));
 
-        $responseA = curl_exec($curl);
-        $resultA = json_decode($responseA, true);  
-        echo "\n" . var_export($resultA) . "\n";
-
+        $responseGet = curl_exec($curl);
+        $resultGet = json_decode($responseGet, true);
+        $lengthGet = $resultGet["data"];
         curl_close($curl);
-        // --
+
+        for ($x = 0; $x < sizeof($lengthGet); $x++) {
+            $invitationID = $lengthGet[$x]['invitation_id'];
+            echo $invitationID;
+            // --
+            $curl = curl_init();
+
+            // echo $invitationURL . '/' . $customerID . "--2";
+            //post to invitation
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://api-ticket.arisukarno.xyz/items/invitation/' . $invitationID,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'PATCH',
+                CURLOPT_POSTFIELDS =>'{
+                "invitation_status": 2
+            }',
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json'
+                ),
+            ));
+
+            $responseA = curl_exec($curl);
+            $resultA = json_decode($responseA, true);  
+            echo "\n" . $responseA . "\n";
+
+            curl_close($curl);
+            // --
+        }
+
+        // ---
 
         $curl = curl_init();
 
@@ -850,10 +941,30 @@
         echo $customerPostResponse;
         // header('Location: ../view/statusPesanan.php?errCus');
     }else{
+        
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $orderURL . '?fields=customer_id.customer_name,ticket_id.ticket_type,ticket_id.ticket_price,invoice_id.invoice_total,invoice_id.invoice_status,voucher_id.voucher_discount&filter[customer_id][customer_id]=' . $customerID . "&filter[invoice_id][invoice_status]=pending",
+            CURLOPT_URL => $orderURL . '?fields=invoice_id.invoice_id&filter[customer_id][customer_id]=' . $customerID . "&filter[invoice_id][invoice_status]=pending",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+
+        $responseGet = curl_exec($curl);
+        $resultGet = json_decode($responseGet, true);
+        $lengthGet = $resultGet["data"];
+        curl_close($curl);
+        $invoiceId = $lengthGet[0]['invoice_id']['invoice_id'];
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $orderURL . '?fields=customer_id.customer_id,customer_id.customer_name,ticket_id.ticket_type,ticket_id.ticket_price,invoice_id.invoice_id,invoice_id.invoice_total,invoice_id.invoice_status,voucher_id.voucher_discount&filter[invoice_id][invoice_id]=' . $invoiceId,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -1098,6 +1209,6 @@
         $mail->send();
     }
 
-    header('Location: ../view/paymentMidtrans.php?m=' . $_SESSION['cred']);
+    // header('Location: ../view/paymentMidtrans.php?m=' . $_SESSION['cred']);
     
 ?>

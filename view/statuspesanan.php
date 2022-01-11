@@ -2,7 +2,7 @@
     session_start();
     $_SESSION['cred'] = $_GET['m'];
 
-    // include '../controller/checkAvailable.php';
+    include '../controller/checkAvailable.php';
     include '../controller/checkInvoiceExpired.php'
 ?>
 <!DOCTYPE html>
