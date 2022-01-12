@@ -2,20 +2,22 @@
 
 echo "Jalan..";
 
-$date = new DateTime("2022-01-04T08:43:21.000Z");
-$date->add(new DateInterval("P1D"));
+// date_default_timezone_set("Asia/Bangkok");
+
+// $date = new DateTime("2022-01-04T08:43:21.000Z");
+// $date->add(new DateInterval("P1D"));
     
-// echo $date->format('c');
+// // echo $date->format('c');
 
-$currentDate = new DateTime();
-$addDate = new DateTime();
-$addDate->add(new DateInterval("P2D"));
+// $currentDate = new DateTime();
+// $addDate = new DateTime();
+// $addDate->add(new DateInterval("P2D"));
 
-echo $currentDate->format('c') . "<br>";
+// echo $currentDate->format('c') . "<br>";
 
-if ($addDate > $currentDate) {
-    echo $addDate->format('c');
-}
+// if ($addDate > $currentDate) {
+//     echo $addDate->format('c');
+// }
 
 // $curl = curl_init();
 
@@ -101,39 +103,107 @@ if ($addDate > $currentDate) {
         //         echo 'scs';
         //     }
 
-        // $curl = curl_init();
-        //     curl_setopt_array($curl, array(
-        //         CURLOPT_URL => "https://checkin.nvia.xyz/items/session",
-        //         CURLOPT_RETURNTRANSFER => true,
-        //         CURLOPT_ENCODING => '',
-        //         CURLOPT_MAXREDIRS => 10,
-        //         CURLOPT_TIMEOUT => 0,
-        //         CURLOPT_FOLLOWLOCATION => true,
-        //         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        //         CURLOPT_CUSTOMREQUEST => 'POST',
-        //         CURLOPT_POSTFIELDS =>'{
-        //                 "id": 1,
-        //                 "session_type": "Coba type",
-        //                 "session_desc": "Coba desc"
-        //         }',
-        //         CURLOPT_HTTPHEADER => array(
-        //             'Content-Type: application/json'
-        //         ),
-        //     ));
+        $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "https://checkin.nvia.xyz/items/session",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS =>'{
+                        "id": 10,
+                        "session_type": "Coba type",
+                        "session_desc": "Coba desc"
+                }',
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json'
+                ),
+            ));
 
-        //     $response = curl_exec($curl);
-        //     $result = json_decode($response, true);
-        //     echo var_export($result) . "\n";
+            $response = curl_exec($curl);
+            $result = json_decode($response, true);
+            echo var_export($result) . "\n";
 
 
-        //     if (isset($result['errors'][0]['extensions']['code'])){
-        //         echo $result['errors'][0]['extensions']['code'];
-        //     }
-        //     else{
-        //         echo 'scs';
-        //         echo var_export($result) . "\n";
-        //     }
+            if (isset($result['errors'][0]['extensions']['code'])){
+                echo $result['errors'][0]['extensions']['code'];
+            }
+            else{
+                echo 'scs';
+                echo var_export($result) . "\n";
+            }
 
-        //     curl_close($curl);
+            curl_close($curl);
+
+        $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "https://checkin.nvia.xyz/items/customer",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS =>'{
+                        "id": 214,
+                        "name": "fat",
+                        "status": 1
+                }',
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json'
+                ),
+            ));
+    
+            $response = curl_exec($curl);
+            $result = json_decode($response, true);
+            echo var_export($result) . "\n";
+    
+            if (isset($result['errors'][0]['extensions']['code'])){
+                echo $result['errors'][0]['extensions']['code'];
+            }
+            else{
+                echo 'scs';
+                echo var_export($result) . "\n";
+            }
+    
+            curl_close($curl);
+
+        $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "https://checkin.nvia.xyz/items/registration",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS =>'{
+                        "customer_id": 214,
+                        "session_id": 9,
+                        "ticket_type" : "ticket test"
+                }',
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json'
+                ),
+            ));
+    
+            $response = curl_exec($curl);
+            $result = json_decode($response, true);
+            echo var_export($result) . "\n";
+    
+            if (isset($result['errors'][0]['extensions']['code'])){
+                echo $result['errors'][0]['extensions']['code'];
+            }
+            else{
+                echo 'scs';
+                echo var_export($result) . "\n";
+            }
+    
+            curl_close($curl);
 
 ?>

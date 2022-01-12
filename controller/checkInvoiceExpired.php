@@ -2,6 +2,7 @@
 
 $url = "https://api-ticket.arisukarno.xyz/items/invoice";
 
+date_default_timezone_set("Asia/Bangkok");
 
 $curl = curl_init();
 
@@ -24,10 +25,10 @@ for ($i = 0; $i < sizeof($data); $i++) {
     $endDate = new DateTime($invoiceEnd);
 
     if ($invoiceStatus == "pending") {
+        // echo "<br>" . $data[$i]["invoice_id"] . "<br>";
+        // echo "<br> END " . $endDate->format('c') . "<br>";
+        // echo "<br> CURRENT " . $currentDate->format('c') . "<br>";
         if($currentDate > $endDate) {
-            // echo "<br>" . $data[$i]["invoice_id"] . "<br>";
-            // echo "<br>" . $endDate->format('c') . "<br>";
-            // echo "<br>" . $currentDate->format('c') . "<br>";
             
             // echo "<br> expired <br>";
     

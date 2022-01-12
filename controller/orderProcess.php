@@ -1,6 +1,7 @@
 <?php
     session_start();
 
+    date_default_timezone_set("Asia/Bangkok");
 
     use PHPMailer\PHPMailer\PHPMailer;
     use Dompdf\Dompdf;
