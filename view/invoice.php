@@ -3,6 +3,8 @@ session_start();
 $_SESSION['cred'] = $_GET['m'];
 // $customerCode = "3c68bbfc2556f5041e686dbb929fc6e962c690cef05bd77ab50334f466d56e52bdd718336f1e0854225bb517aa3bc8f9694bd1a3bc8d54dc31e4d2100be31652";
 
+date_default_timezone_set("Asia/Bangkok");
+
 $urlIP = 'api-ticket.arisukarno.xyz';
 
 $urlGet = "https://" . $urlIP .  "/items/order?fields=customer_id.*,invoice_id.invoice_id&filter[customer_id][customer_code]=" . $_SESSION['cred'] . "&filter[invoice_id][invoice_status]=pending";

@@ -10,6 +10,8 @@
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
 
+    date_default_timezone_set("Asia/Bangkok");
+
     require '../vendor/phpmailer/phpmailer/src/Exception.php';
     require '../vendor/phpmailer/phpmailer/src/OAuth.php';
     require '../vendor/phpmailer/phpmailer/src/PHPMailer.php';

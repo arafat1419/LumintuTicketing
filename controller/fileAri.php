@@ -62,6 +62,8 @@ $conn = new mysqli($servername,$username,$password,$db_name);
 				}	
 			}
 			else if ($transaction_status == 'settlement'){
+                echo "SETTLEMENT \n";
+
 				// update transaction 	
 				$sql = "UPDATE payment SET payment_status='settlement' WHERE invoice_id='$order_id'";
 				if (!mysqli_query($conn,$sql)) {
@@ -69,6 +71,9 @@ $conn = new mysqli($servername,$username,$password,$db_name);
 				}
 
                 sendTicket($order_id, $gross_amount);
+
+                echo "SEND \n";
+
 			}
 			else if($transaction_status == 'pending'){	 
 				// insert transaction 
@@ -97,6 +102,8 @@ $conn = new mysqli($servername,$username,$password,$db_name);
 
 
 function sendTicket($order_id, $gross_amount) {
+
+    echo "SEND TIKCET JALAN";
 
     $html2pdf = new Html2Pdf("P", "A4", "en", false, "UTF-8", [25, 15, 30, 0]);
 
@@ -429,29 +436,40 @@ function sendTicket($order_id, $gross_amount) {
         }
     
         for ($j = 0; $j < sizeof($data[0]['ticket_id']['ticket_x_session']); $j++){
+
+            echo "ID SESSION = " .  $data[0]['ticket_id']['ticket_x_session'][$j]['session_id']['session_id'] . "\n";
+            echo "Session Type = " .  $data[0]['ticket_id']['ticket_x_session'][$j]['session_id']['session_type'] . "\n";
+            echo "Session Desc = " .  $data[0]['ticket_id']['ticket_x_session'][$j]['session_id']['session_desc'] . "\n\n";
+
+            echo "Customer ID = " .  $data[0]['customer_id']['customer_id'] . "\n";
+            echo "Customer Name = " .  $data[0]['customer_id']['customer_name'] . "\n";
+            echo "Customer Status = " .  $data[0]['customer_id']['customer_status'] . "\n";
+            
+
+
     
-            $curl = curl_init();
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://checkin.nvia.xyz/items/session",
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                    CURLOPT_POSTFIELDS =>'{
-                        "id": "' . $data[0]['ticket_id']['ticket_x_session'][$j]['session_id']['session_id'] . '",
-                        "session_type": "' . $data[0]['ticket_id']['ticket_x_session'][$j]['session_id']['session_type'] . '",
-                        "session_desc": "' . $data[0]['ticket_id']['ticket_x_session'][$j]['session_id']['session_desc'] . '"
-                }',
-                CURLOPT_HTTPHEADER => array(
-                    'Content-Type: application/json'
-                ),
-            ));
+            // $curl = curl_init();
+            // curl_setopt_array($curl, array(
+            //     CURLOPT_URL => "https://checkin.nvia.xyz/items/session",
+            //     CURLOPT_RETURNTRANSFER => true,
+            //     CURLOPT_ENCODING => '',
+            //     CURLOPT_MAXREDIRS => 10,
+            //     CURLOPT_TIMEOUT => 0,
+            //     CURLOPT_FOLLOWLOCATION => true,
+            //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            //     CURLOPT_CUSTOMREQUEST => 'POST',
+            //         CURLOPT_POSTFIELDS =>'{
+            //             "id": ' . $data[0]['ticket_id']['ticket_x_session'][$j]['session_id']['session_id'] . ',
+            //             "session_type": "' . $data[0]['ticket_id']['ticket_x_session'][$j]['session_id']['session_type'] . '",
+            //             "session_desc": "' . $data[0]['ticket_id']['ticket_x_session'][$j]['session_id']['session_desc'] . '"
+            //     }',
+            //     CURLOPT_HTTPHEADER => array(
+            //         'Content-Type: application/json'
+            //     ),
+            // ));
     
-            $response = curl_exec($curl);
-            $result = json_decode($response, true);
+            // $response = curl_exec($curl);
+            // $result = json_decode($response, true);
             // echo var_export($result) . "\n";
     
             // if (isset($result['errors'][0]['extensions']['code'])){
@@ -462,7 +480,7 @@ function sendTicket($order_id, $gross_amount) {
             //     echo var_export($result) . "\n";
             // }
     
-            curl_close($curl);
+            // curl_close($curl);
     
             $curl = curl_init();
             curl_setopt_array($curl, array(
@@ -475,7 +493,7 @@ function sendTicket($order_id, $gross_amount) {
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'POST',
                     CURLOPT_POSTFIELDS =>'{
-                        "id": "' . $data[0]['customer_id']['customer_id'] . '",
+                        "id": ' . $data[0]['customer_id']['customer_id'] . ',
                         "name": "' . $data[0]['customer_id']['customer_name'] . '",
                         "status": ' . $data[0]['customer_id']['customer_status'] . '
                 }',
@@ -509,8 +527,8 @@ function sendTicket($order_id, $gross_amount) {
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'POST',
                     CURLOPT_POSTFIELDS =>'{
-                        "customer_id": "' . $data[0]['customer_id']['customer_id'] . '",
-                        "session_id": "' . $data[0]['ticket_id']['ticket_x_session'][$j]['session_id']['session_id'] . '",
+                        "customer_id": ' . $data[0]['customer_id']['customer_id'] . ',
+                        "session_id": ' . $data[0]['ticket_id']['ticket_x_session'][$j]['session_id']['session_id'] . ',
                         "ticket_type" : "' . $data[0]['ticket_id']['ticket_type'] . '"
                 }',
                 CURLOPT_HTTPHEADER => array(
