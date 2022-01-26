@@ -17,7 +17,9 @@ require_once "../vendor/dompdf/dompdf/src/Autoloader.php";
 
 use Endroid\QrCode\QrCode;
 
-$servername="20.124.96.140";
+$accessToken = '?access_token=Q$Q68KDADkOvPtHPXhJxtfFafr0rKSuUL40fV5uy6JYDo';
+
+$servername="20.124.33.158";
 $username="root";
 $password="Lumintu-ticket2021";
 $db_name="lumintu_ticket_merge";

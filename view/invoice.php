@@ -5,6 +5,9 @@ $_SESSION['cred'] = $_GET['m'];
 
 date_default_timezone_set("Asia/Bangkok");
 
+$accessToken = '?access_token=Q$Q68KDADkOvPtHPXhJxtfFafr0rKSuUL40fV5uy6JYDo';
+
+
 $urlIP = 'api-ticket.arisukarno.xyz';
 
 $urlGet = "https://" . $urlIP .  "/items/order?fields=customer_id.*,invoice_id.invoice_id&filter[customer_id][customer_code]=" . $_SESSION['cred'] . "&filter[invoice_id][invoice_status]=pending";

@@ -6,11 +6,11 @@ $orderURL = 'https://' . $urlIP . '/items/order';
 $voucherURL = 'https://' . $urlIP . '/items/voucher';
 $ticketURL = 'https://' . $urlIP . '/items/ticket';
 
-
+$accessToken = '?access_token=Q$Q68KDADkOvPtHPXhJxtfFafr0rKSuUL40fV5uy6JYDo';
 
 // GET VOUCHER
 $curl = curl_init();
-curl_setopt($curl, CURLOPT_URL, $orderURL . '?fields=voucher_id.*,invoice_id.invoice_id,invoice_id.invoice_status');
+curl_setopt($curl, CURLOPT_URL, $orderURL . '?fields=voucher_id.*,invoice_id.invoice_id,invoice_id.invoice_status' . $accessToken);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 $responseID = curl_exec($curl);
 $resultID = json_decode($responseID, true);
@@ -54,7 +54,7 @@ for ($i = 0; $i < count($voucherId); $i++) {
 
     // GET VOUCHER
     $curl = curl_init();
-    curl_setopt($curl, CURLOPT_URL, $orderURL . '?fields=voucher_id.*,invoice_id.invoice_id,invoice_id.invoice_status&filter[voucher_id.voucher_id]=' . $voucherId[$i]);
+    curl_setopt($curl, CURLOPT_URL, $orderURL . '?fields=voucher_id.*,invoice_id.invoice_id,invoice_id.invoice_status&filter[voucher_id.voucher_id]=' . $voucherId[$i] . $accessToken);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
     $responseID = curl_exec($curl);
     $resultID = json_decode($responseID, true);
@@ -98,7 +98,7 @@ for ($i = 0; $i < count($voucherId); $i++) {
     if ($getVoucherAvailable != $voucherAvailable) {
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $voucherURL . "/" . $voucherId[$i],
+            CURLOPT_URL => $voucherURL . "/" . $voucherId[$i] . $accessToken,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -133,7 +133,7 @@ for ($i = 0; $i < count($voucherId); $i++) {
 
 // GET TICKET
 $curl = curl_init();
-curl_setopt($curl, CURLOPT_URL, $orderURL . '?fields=ticket_id.*,invoice_id.invoice_id,invoice_id.invoice_status');
+curl_setopt($curl, CURLOPT_URL, $orderURL . '?fields=ticket_id.*,invoice_id.invoice_id,invoice_id.invoice_status' . $accessToken);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 $responseID = curl_exec($curl);
 $resultID = json_decode($responseID, true);
@@ -174,7 +174,7 @@ for ($i = 0; $i < count($ticketId); $i++) {
 
     // GET VOUCHER
     $curl = curl_init();
-    curl_setopt($curl, CURLOPT_URL, $orderURL . '?fields=ticket_id.*,invoice_id.invoice_id,invoice_id.invoice_status&filter[ticket_id.ticket_id]=' . $ticketId[$i]);
+    curl_setopt($curl, CURLOPT_URL, $orderURL . '?fields=ticket_id.*,invoice_id.invoice_id,invoice_id.invoice_status&filter[ticket_id.ticket_id]=' . $ticketId[$i] . $accessToken);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
     $responseID = curl_exec($curl);
     $resultID = json_decode($responseID, true);
@@ -213,7 +213,7 @@ for ($i = 0; $i < count($ticketId); $i++) {
     if ($getTicketAvailable != $ticketAvailable) {
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $ticketURL . "/" . $ticketId[$i],
+            CURLOPT_URL => $ticketURL . "/" . $ticketId[$i] . $accessToken,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,

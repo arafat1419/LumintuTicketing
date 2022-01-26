@@ -5,6 +5,8 @@
 
     $customerURL = 'https://api-ticket.arisukarno.xyz/items/customer';
 
+    $accessToken = '?access_token=Q$Q68KDADkOvPtHPXhJxtfFafr0rKSuUL40fV5uy6JYDo';
+
     $curl = curl_init();
 
     //get customer ID

@@ -1,5 +1,7 @@
 <?php
 //    $url = 'http://192.168.43.162:8055/items/ticket?fields=ticket_x_session.session_id';
+    $accessToken = '?access_token=Q$Q68KDADkOvPtHPXhJxtfFafr0rKSuUL40fV5uy6JYDo';
+
     $curl = curl_init();
 
     curl_setopt($curl, CURLOPT_URL, "https://api-ticket.arisukarno.xyz/items/order?fields=customer_id.customer_id,customer_id.customer_name,customer_id.customer_status,invoice_id.invoice_status,ticket_id.ticket_type,ticket_id.ticket_x_session.session_id.*&filter[invoice_id][invoice_status]=1");

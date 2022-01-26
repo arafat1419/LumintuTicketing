@@ -15,7 +15,9 @@
 
     require_once '../vendor/dompdf/dompdf/src/Autoloader.php';
 
-    $invoiceLink = 'http://localhost/LumintuTicketing/view/invoice.php';
+    $accessToken = '?access_token=Q$Q68KDADkOvPtHPXhJxtfFafr0rKSuUL40fV5uy6JYDo';
+
+    $invoiceLink = "http://{$_SERVER['HTTP_HOST']}/LumintuTicketing/view/invoice.php";
 
     $urlIP = 'api-ticket.arisukarno.xyz';
 

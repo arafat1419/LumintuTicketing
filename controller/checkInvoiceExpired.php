@@ -2,11 +2,13 @@
 
 $url = "https://api-ticket.arisukarno.xyz/items/invoice";
 
+$accessToken = '?access_token=Q$Q68KDADkOvPtHPXhJxtfFafr0rKSuUL40fV5uy6JYDo';
+
 date_default_timezone_set("Asia/Bangkok");
 
 $curl = curl_init();
 
-curl_setopt($curl, CURLOPT_URL, $url);
+curl_setopt($curl, CURLOPT_URL, $url  . $accessToken);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 $response = curl_exec($curl);
 $result = json_decode($response, true);
@@ -34,7 +36,7 @@ for ($i = 0; $i < sizeof($data); $i++) {
     
             $curl = curl_init();
                 curl_setopt_array($curl, array(
-                    CURLOPT_URL => "https://api-ticket.arisukarno.xyz/items/invoice/$invoiceId",
+                    CURLOPT_URL => "https://api-ticket.arisukarno.xyz/items/invoice/$invoiceId"  . $accessToken,
                     CURLOPT_RETURNTRANSFER => true,
                     CURLOPT_ENCODING => '',
                     CURLOPT_MAXREDIRS => 10,
@@ -63,7 +65,7 @@ $urlInvitation = "https://api-ticket.arisukarno.xyz/items/invitation";
 
 $curl = curl_init();
 
-curl_setopt($curl, CURLOPT_URL, $urlInvitation);
+curl_setopt($curl, CURLOPT_URL, $urlInvitation  . $accessToken);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 $responseInvitation = curl_exec($curl);
 $resultInvitation = json_decode($responseInvitation, true);
@@ -84,7 +86,7 @@ for ($j = 0; $j < sizeof($dataInvitation); $j++) {
 
     $curl = curl_init();
 
-    curl_setopt($curl, CURLOPT_URL, "https://api-ticket.arisukarno.xyz/items/order?fields=ticket_id.event_id.event_date_finished&filter[customer_id.customer_id]=" . $invitationCustomerId);
+    curl_setopt($curl, CURLOPT_URL, "https://api-ticket.arisukarno.xyz/items/order?fields=ticket_id.event_id.event_date_finished&filter[customer_id.customer_id]=" . $invitationCustomerId  . $accessToken);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
     $responseEvent = curl_exec($curl);
     $resultEvent = json_decode($responseEvent, true);
@@ -101,7 +103,7 @@ for ($j = 0; $j < sizeof($dataInvitation); $j++) {
             echo "Jalan 2";
                 $curl = curl_init();
                     curl_setopt_array($curl, array(
-                        CURLOPT_URL => "https://api-ticket.arisukarno.xyz/items/invitation/$invitationId",
+                        CURLOPT_URL => "https://api-ticket.arisukarno.xyz/items/invitation/$invitationId"  . $accessToken,
                         CURLOPT_RETURNTRANSFER => true,
                         CURLOPT_ENCODING => '',
                         CURLOPT_MAXREDIRS => 10,

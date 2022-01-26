@@ -15,6 +15,8 @@
 
     require_once '../vendor/dompdf/dompdf/src/Autoloader.php';
 
+    $accessToken = '?access_token=Q$Q68KDADkOvPtHPXhJxtfFafr0rKSuUL40fV5uy6JYDo';
+
     use Endroid\QrCode\QrCode;
 
     $urlIP = 'api-ticket.arisukarno.xyz';

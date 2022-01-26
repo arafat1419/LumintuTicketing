@@ -1,5 +1,5 @@
 <?php
-    $host = "arisukarno.xyz";
+    $host = "20.124.33.158";
     $user = "root";
     $pass = "Lumintu-ticket2021";
     $name = "lumintu_ticket_merge";

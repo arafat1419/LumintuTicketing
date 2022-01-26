@@ -10,7 +10,7 @@
     require '../vendor/phpmailer/phpmailer/src/SMTP.php';
 
     $email = $_POST['email'];
-    $verificationLink = 'http://localhost/LumintuTicketing/view/registration/bioRegistration.php';
+    $verificationLink = "http://{$_SERVER['HTTP_HOST']}/LumintuTicketing/view/registration/bioRegistration.php";
 
     echo $email;
 

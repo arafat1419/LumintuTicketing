@@ -17,6 +17,8 @@ require_once "../vendor/dompdf/dompdf/src/Autoloader.php";
 
 use Endroid\QrCode\QrCode;
 
+$accessToken = '?access_token=Q$Q68KDADkOvPtHPXhJxtfFafr0rKSuUL40fV5uy6JYDo';
+
 $html2pdf = new Html2Pdf("P", "A4", "en", false, "UTF-8", [25, 15, 30, 0]);
 
 $url =

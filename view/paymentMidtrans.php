@@ -6,6 +6,8 @@
 session_start();
 $_SESSION['cred'] = $_GET['m'];
 
+$accessToken = '?access_token=Q$Q68KDADkOvPtHPXhJxtfFafr0rKSuUL40fV5uy6JYDo';
+
 // echo $_SESSION['cred'];
 
 $urlIP = 'api-ticket.arisukarno.xyz';
