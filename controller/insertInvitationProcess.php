@@ -2,8 +2,8 @@
 
     session_start();
     $cred = $_SESSION['cred'];
-    $buyTicketLink = 'http://localhost/LumintuTicketing/view/statuspesanan.php';
-    $bioLink = 'http://localhost/LumintuTicketing/view/invitation.php';
+    $buyTicketLink = "http://{$_SERVER['HTTP_HOST']}/LumintuTicketing/view/statuspesanan.php";
+    $bioLink = "http://{$_SERVER['HTTP_HOST']}/LumintuTicketing/view/invitation.php";
     $customerURL = 'https://api-ticket.arisukarno.xyz/items/customer';
     $invitationURL = 'https://api-ticket.arisukarno.xyz/items/invitation';
 
@@ -17,6 +17,8 @@
     require '../vendor/phpmailer/phpmailer/src/PHPMailer.php';
     require '../vendor/phpmailer/phpmailer/src/POP3.php';
     require '../vendor/phpmailer/phpmailer/src/SMTP.php';
+    
+    $accessToken = '?access_token=Q$Q68KDADkOvPtHPXhJxtfFafr0rKSuUL40fV5uy6JYDo';
 
     $numberOfPost = count($_POST);
 

@@ -4,6 +4,7 @@
     $customerURL = 'https://api-ticket.arisukarno.xyz/items/customer';
     $invitationURL = 'https://api-ticket.arisukarno.xyz/items/invitation';
 
+    $accessToken = '?access_token=Q$Q68KDADkOvPtHPXhJxtfFafr0rKSuUL40fV5uy6JYDo';
     $custID = $_POST['custID'];
     $email = $_POST['email'];
     $name = $_POST['name'];
@@ -39,7 +40,7 @@
 
     if (!isset($resultCustomer['errors'][0]['extensions']['code'])){
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $invitationURL . '?&filter[customer_id]=' . $custID);
+        curl_setopt($curl, CURLOPT_URL, $invitationURL . '?&filter[customer_id]=' . $custID . $accessToken);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         $responseID = curl_exec($curl);
         $resultID = json_decode($responseID, true);
@@ -50,7 +51,7 @@
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $invitationURL . '/' . $invitationID,
+            CURLOPT_URL => $invitationURL . '/' . $invitationID . $accessToken,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,

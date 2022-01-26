@@ -10,6 +10,7 @@ $(document).ready(function () {
     },
     success: function (data, textStatus, xhr) {
       const event = data.data;
+      console.log(event);
       event.map((item) => {
         let eventItem = `
             <div class="item item${item.event_id} rounded d-flex align-items-center" onmouseenter="tes(this)">

@@ -17,7 +17,7 @@
     $email = $_POST['email'];
     $phoneNum = $_POST['phoneNum'];
     $cusCode = hash('sha512', $email.$phoneNum);
-    $loginLink = 'http://localhost/LumintuTicketing/controller/verificationProcess.php?m=' . $cusCode;
+    $loginLink = "http://{$_SERVER['HTTP_HOST']}/LumintuTicketing/controller/verificationProcess.php?m=" . $cusCode;
 
     $query = "INSERT INTO `customer`(`customer_email`, `customer_name`, `customer_phone`, `customer_code`)
                 SELECT '$email', '$name', '$phoneNum', '$cusCode'

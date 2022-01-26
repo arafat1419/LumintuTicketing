@@ -246,7 +246,10 @@ $(document).ready(function () {
           console.log("Data jalan");
           console.log(data.data.length);
 
-          data.data.map((item, index) => {
+          let statusArray = [];
+
+          data.data.map((item, index) => { 
+            statusArray.push(item.invitation_status);
             if(item.invitation_status == 0 || item.invitation_status == 1) {
               pembelian.push(0);
             tableRow = `
@@ -299,7 +302,14 @@ $(document).ready(function () {
 
           checkStatus();
 
-          if (data.data.length == 1) {
+          let countStatus = 0;
+          statusArray.forEach((item) => {
+            if (item == 1) {
+              countStatus++
+            }
+          });
+
+          if (countStatus == 1) {
             $('.voucher').removeClass('d-none');
             $('.table-status').DataTable({
               paging: false,

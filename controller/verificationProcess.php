@@ -2,6 +2,8 @@
     session_start();
 
     // include 'sendPaidCustomer.php';
+    $accessToken = '?access_token=Q$Q68KDADkOvPtHPXhJxtfFafr0rKSuUL40fV5uy6JYDo';
+
 
     $_SESSION['cred'] = $_GET['m'];
 
